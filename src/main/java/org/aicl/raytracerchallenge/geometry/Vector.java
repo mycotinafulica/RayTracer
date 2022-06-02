@@ -1,7 +1,7 @@
 package org.aicl.raytracerchallenge.geometry;
 
 public class Vector extends Tuple{
-    public Vector(float x, float y, float z){
+    public Vector(double x, double y, double z){
         super(x, y, z, 0);
     }
 }
