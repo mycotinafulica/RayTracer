@@ -2,6 +2,7 @@ package org.aicl.raytracerchallenge;
 
 import org.aicl.raytracerchallenge.geometry.Point;
 import org.aicl.raytracerchallenge.geometry.Tuple;
+import org.aicl.raytracerchallenge.geometry.TupleOperation;
 import org.aicl.raytracerchallenge.geometry.Vector;
 import org.aicl.raytracerchallenge.utilities.FloatEquality;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,11 @@ public class TupleTest {
         v = new Vector(-2, 3, 1);
         Tuple newP = p.add(v);
         assertTrue(newP.isIdentical(target));
+
+        p  = new Point(3, -2, 5);
+        v = new Vector(-2, 3, 1);
+        newP = TupleOperation.add(p, v);
+        assertTrue(newP.isIdentical(target));
     }
 
     @Test
@@ -81,6 +87,11 @@ public class TupleTest {
 
         Tuple result = p.subtract(v);
         assertTrue(result.isIdentical(target));
+
+        p = new Point(3, 2, 1);
+        v = new Vector(5, 6, 7);
+        result = TupleOperation.subtract(p, v);
+        assertTrue(result.isIdentical(target));
     }
 
     @Test
@@ -90,6 +101,11 @@ public class TupleTest {
         Vector target = new Vector(-2, -4, -6);
 
         Tuple result = v1.subtract(v2);
+        assertTrue(result.isIdentical(target));
+
+        v1     = new Vector(3, 2, 1);
+        v2     = new Vector(5, 6, 7);
+        result = TupleOperation.subtract(v1, v2);
         assertTrue(result.isIdentical(target));
     }
 
@@ -151,5 +167,21 @@ public class TupleTest {
         assertTrue(target2.isIdentical(v2));
 
         assertEquals(1.0, v2.magnitude(), 0.00001);
+    }
+
+    @Test
+    public void dotProductTest(){
+        Vector a = new Vector(1, 2, 3);
+        Vector b = new Vector(2, 3,4);
+        assertEquals(20, TupleOperation.dot(a, b));
+    }
+
+    @Test
+    public void crossProductTest(){
+        Vector a = new Vector(1, 2, 3);
+        Vector b = new Vector(2, 3,4);
+        Vector result = new Vector(-1, 2, -1);
+        assertTrue(result.isIdentical(TupleOperation.cross(a, b)));
+        assertTrue(result.negates().isIdentical(TupleOperation.cross(b, a)));
     }
 }
