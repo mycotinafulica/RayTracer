@@ -10,18 +10,24 @@ public class Tuple {
         this.z = z; this.w = w;
     }
 
-    public void addToSelf(Tuple t){
+    public Tuple(Tuple p){
+        this(p.x, p.y, p.z, p.w);
+    }
+
+    public Tuple addToSelf(Tuple t){
         this.x += t.x;  this.y += t.y;
         this.z += t.z;  this.w += t.w;
+        return this;
     }
 
     public Tuple add(Tuple t){
         return new Tuple(x + t.x, y + t.y, z + t.z, w + t.w);
     }
 
-    public void subtractSelf(Tuple t){
+    public Tuple subtractSelf(Tuple t){
         this.x -= t.x; this.y -= t.y;
         this.z -= t.z; this.w -= t.w;
+        return this;
     }
 
     public Tuple subtract(Tuple t){
@@ -32,17 +38,19 @@ public class Tuple {
         return isEqual(x, t.x) && isEqual(y, t.y) && isEqual(z, t.z) && isEqual(w, t.w);
     }
 
-    public void negatesSelf(){
+    public Tuple negatesSelf(){
         x = -x; y = -y; z = -z; w = -w;
+        return this;
     }
 
     public Tuple negates(){
         return new Tuple(-x, -y, -z, -w);
     }
 
-    public void multiplySelf(double multiplier){
+    public Tuple multiplySelf(double multiplier){
         this.x *= multiplier; this.y *= multiplier;
         this.z *= multiplier; this.w *= multiplier;
+        return this;
     }
 
     public Tuple multiply(double multiplier){
@@ -50,9 +58,11 @@ public class Tuple {
                 z *  multiplier, w * multiplier);
     }
 
-    public void divideSelf(double divisor){
+    public Tuple divideSelf(double divisor){
         double multiplier = 1.0f/divisor;
         multiplySelf(multiplier);
+
+        return this;
     }
 
     public Tuple divide(double divisor){
@@ -64,8 +74,9 @@ public class Tuple {
         return Math.sqrt(x*x + y*y + z*z + w*w);
     }
 
-    public void normalize(){
+    public Tuple normalize(){
         divideSelf(magnitude());
+        return this;
     }
 
     public boolean isAPoint(){

@@ -1,4 +1,4 @@
-package org.aicl.raytracerchallenge;
+package org.aicl.raytracerchallenge.geometry;
 
 import org.aicl.raytracerchallenge.geometry.Point;
 import org.aicl.raytracerchallenge.geometry.Tuple;
