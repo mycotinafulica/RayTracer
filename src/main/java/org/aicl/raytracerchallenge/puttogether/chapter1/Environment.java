@@ -1,6 +1,6 @@
 package org.aicl.raytracerchallenge.puttogether.chapter1;
 
-import org.aicl.raytracerchallenge.geometry.Vector;
+import org.aicl.raytracerchallenge.primitives.Vector;
 
 public class Environment {
     public Vector gravity;

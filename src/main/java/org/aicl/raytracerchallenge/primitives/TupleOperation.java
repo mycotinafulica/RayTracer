@@ -1,4 +1,4 @@
-package org.aicl.raytracerchallenge.geometry;
+package org.aicl.raytracerchallenge.primitives;
 
 public class TupleOperation {
     public static double dot(Tuple a, Tuple b){

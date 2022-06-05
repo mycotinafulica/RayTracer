@@ -1,4 +1,4 @@
-package org.aicl.raytracerchallenge.geometry;
+package org.aicl.raytracerchallenge.primitives;
 
 import org.aicl.raytracerchallenge.utilities.FloatEquality;
 

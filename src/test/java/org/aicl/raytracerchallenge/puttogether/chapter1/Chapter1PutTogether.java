@@ -1,7 +1,7 @@
 package org.aicl.raytracerchallenge.puttogether.chapter1;
 
-import org.aicl.raytracerchallenge.geometry.Point;
-import org.aicl.raytracerchallenge.geometry.Vector;
+import org.aicl.raytracerchallenge.primitives.Point;
+import org.aicl.raytracerchallenge.primitives.Vector;
 import org.junit.jupiter.api.Test;
 
 public class Chapter1PutTogether {

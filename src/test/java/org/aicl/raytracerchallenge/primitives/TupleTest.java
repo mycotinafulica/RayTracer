@@ -1,10 +1,5 @@
-package org.aicl.raytracerchallenge.geometry;
+package org.aicl.raytracerchallenge.primitives;
 
-import org.aicl.raytracerchallenge.geometry.Point;
-import org.aicl.raytracerchallenge.geometry.Tuple;
-import org.aicl.raytracerchallenge.geometry.TupleOperation;
-import org.aicl.raytracerchallenge.geometry.Vector;
-import org.aicl.raytracerchallenge.utilities.FloatEquality;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

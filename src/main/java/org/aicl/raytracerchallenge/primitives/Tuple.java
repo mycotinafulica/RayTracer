@@ -1,4 +1,4 @@
-package org.aicl.raytracerchallenge.geometry;
+package org.aicl.raytracerchallenge.primitives;
 
 import static org.aicl.raytracerchallenge.utilities.FloatEquality.isEqual;
 
