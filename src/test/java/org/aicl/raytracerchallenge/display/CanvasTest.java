@@ -42,7 +42,6 @@ public class CanvasTest {
 
         try {
             c.writeToPpmFile("E:\\William\\HighImportance\\GIT_ROOT\\RayTracerChallenge\\RayTracerChallenge\\test\\test_ppm_write.ppm");
-
             ArrayList<String> expected = new ArrayList<>();
             //header
             expected.add("P3");
@@ -68,6 +67,30 @@ public class CanvasTest {
     @Test
     public void splittingLongLinesInPpm(){
         Canvas c = new Canvas(10, 2);
+        c.setAllPixelColors(new Color(1, 0.8, 0.6));
 
+        try {
+            c.writeToPpmFile("E:\\William\\HighImportance\\GIT_ROOT\\RayTracerChallenge\\RayTracerChallenge\\test\\test_ppm_write2.ppm");
+            ArrayList<String> expected = new ArrayList<>();
+            //header
+            expected.add("P3");
+            expected.add("10 2");
+            expected.add("255");
+            expected.add("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204");
+            expected.add("153 255 204 153 255 204 153 255 204 153 255 204 153");
+            expected.add("255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204");
+            expected.add("153 255 204 153 255 204 153 255 204 153 255 204 153");
+            BufferedReader br = new BufferedReader(new FileReader("E:\\William\\HighImportance" +
+                    "\\GIT_ROOT\\RayTracerChallenge\\RayTracerChallenge\\test\\test_ppm_write2.ppm"));
+            String line;
+            int lineNumber = 0;
+            while ((line = br.readLine()) != null) {
+                assertEquals(expected.get(lineNumber), line);
+                lineNumber++;
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

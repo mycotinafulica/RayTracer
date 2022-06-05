@@ -37,6 +37,14 @@ public class Canvas {
         return pixels.get(row).get(col);
     }
 
+    public void setAllPixelColors(Color c){
+        for(int row = 0; row < height; row++){
+            for(int col = 0; col < width; col++){
+                writePixel(col, row, c);
+            }
+        }
+    }
+
     public List<Color> getAllPixelsAsList(){
         ArrayList<Color> result = new ArrayList<>();
         for(int row = 0 ; row < height ; row++){
