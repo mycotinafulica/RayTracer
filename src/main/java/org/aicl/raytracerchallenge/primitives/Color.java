@@ -12,6 +12,10 @@ public class Color {
         tuple = t;
     }
 
+    public void setColor(Color color){
+        this.tuple = color.toTuple();
+    }
+
     public double red(){
         return tuple.x;
     }
