@@ -91,7 +91,20 @@ public class MatrixTest {
         });
 
         Matrix result = m1.multiply(m2);
-        
         assertTrue(expected.isEqual(result));
+    }
+
+    @Test
+    public void matrixTupleMultiply(){
+        Matrix m = new Matrix(new double[][]{
+                new double[]{1, 2, 3, 4},
+                new double[]{2, 4, 4, 2},
+                new double[]{8, 6, 4, 1},
+                new double[]{0, 0, 0, 1}
+        });
+        Tuple t = new Tuple(1, 2, 3, 1);
+        Tuple expected = new Tuple(18, 24, 33, 1);
+        Tuple result = m.multiply(t);
+        assertTrue(expected.isIdentical(result));
     }
 }
