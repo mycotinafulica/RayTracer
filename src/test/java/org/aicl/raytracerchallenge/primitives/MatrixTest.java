@@ -41,4 +41,57 @@ public class MatrixTest {
         assertEquals(-2, m.elementAt(1, 1), 0.00001);
         assertEquals(1, m.elementAt(2, 2), 0.00001);
     }
+
+    @Test
+    public void equalityTest(){
+        Matrix m1 = new Matrix(new double[][]{
+                new double[]{1, 2, 3, 4},
+                new double[]{5, 6, 7, 8},
+                new double[]{9, 8, 7, 6},
+                new double[]{5, 4, 3, 2}
+        });
+        Matrix m2 = new Matrix(new double[][]{
+                new double[]{1, 2, 3, 4},
+                new double[]{5, 6, 7, 8},
+                new double[]{9, 8, 7, 6},
+                new double[]{5, 4, 3, 2}
+        });
+
+        assertTrue(m1.isEqual(m2));
+
+        Matrix m3 = new Matrix(new double[][]{
+                new double[]{1, 2, 3, 4},
+                new double[]{5, 6, 7, 8},
+                new double[]{9, 8, 7, 6},
+                new double[]{5, 1, 3, 2}
+        });
+
+        assertFalse(m1.isEqual(m3));
+    }
+
+    @Test
+    public void multiplicationTest(){
+        Matrix m1 = new Matrix(new double[][]{
+                new double[]{1, 2, 3, 4},
+                new double[]{5, 6, 7, 8},
+                new double[]{9, 8, 7, 6},
+                new double[]{5, 4, 3, 2}
+        });
+        Matrix m2 = new Matrix(new double[][]{
+                new double[]{-2, 1, 2, 3},
+                new double[]{3, 2, 1, -1},
+                new double[]{4, 3, 6, 5},
+                new double[]{1, 2, 7, 8}
+        });
+        Matrix expected = new Matrix(new double[][]{
+                new double[]{20, 22, 50, 48},
+                new double[]{44, 54, 114, 108},
+                new double[]{40, 58, 110, 102},
+                new double[]{16, 26, 46, 42}
+        });
+
+        Matrix result = m1.multiply(m2);
+        
+        assertTrue(expected.isEqual(result));
+    }
 }
