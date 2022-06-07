@@ -161,6 +161,34 @@ public class MatrixTest {
     }
 
     @Test
+    public void testSubMatrix(){
+        Matrix m = new Matrix(new double[][]{
+                new double[]{1, 5, 0},
+                new double[]{-3, 2, 7},
+                new double[]{0, 6, -3}
+        });
+        Matrix expected = new Matrix(new double[][]{
+                new double[]{-3, 2},
+                new double[]{0, 6}
+        });
+        assertTrue(expected.isEqual(m.subMatrix(0, 2)));
+
+        m = new Matrix(new double[][]{
+                new double[]{-6, 1, 1, 6},
+                new double[]{-8, 5, 8, 6},
+                new double[]{-1, 0, 8, 2},
+                new double[]{-7, 1, -1, 1}
+        });
+        expected = new Matrix(new double[][]{
+                new double[]{-6, 1, 6},
+                new double[]{-8, 8, 6},
+                new double[]{-7, -1, 1}
+        });
+        Matrix subMat = m.subMatrix(2, 1);
+        assertTrue(expected.isEqual(subMat));
+    }
+
+    @Test
     public void testDeterminant(){
         Matrix m = new Matrix(new double[][]{
                 new double[]{1, 5},

@@ -106,10 +106,25 @@ public class Matrix {
         return elementAt(0, 0)*elementAt(1,1) - elementAt(0, 1)*elementAt(1, 0);
     }
 
-    /*public Matrix subMatrix(int row, int col){
+    public Matrix subMatrix(int discardRow, int discardCol){
         double[][] result = new double[row-1][col-1];
-
-    }*/
+        int rowOffset = 0;
+        for(int r = 0 ; r<row ; r++){
+            int colOffset = 0;
+            if(r == discardRow){
+                rowOffset = 1;
+                continue;
+            }
+            for(int c = 0; c<col ; c++){
+                if(c == discardCol){
+                    colOffset = 1;
+                    continue;
+                }
+                result[r - rowOffset][c - colOffset] = elementAt(r, c);
+            }
+        }
+        return new Matrix(result);
+    }
 
     public void print(){
         System.out.println(Arrays.deepToString(matrix));
