@@ -144,5 +144,28 @@ public class MatrixTest {
                 new double[]{0, 8, 3, 8}
         });
         assertTrue(expected.isEqual(m.transpose()));
+
+        m = new Matrix(new double[][]{
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+        });
+        expected = new Matrix(new double[][]{
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+        });
+        assertTrue(expected.isEqual(m.transpose()));
+    }
+
+    @Test
+    public void testDeterminant(){
+        Matrix m = new Matrix(new double[][]{
+                new double[]{1, 5},
+                new double[]{-3, 2}
+        });
+        assertEquals(17.0, m.determinant(), 0.00001);
     }
 }

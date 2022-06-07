@@ -99,6 +99,18 @@ public class Matrix {
         return new Matrix(result);
     }
 
+    public double determinant(){
+        if(row != 2 || col !=2){
+            throw new IllegalArgumentException("Only calculating determinant of 2x2 matrix is supported!");
+        }
+        return elementAt(0, 0)*elementAt(1,1) - elementAt(0, 1)*elementAt(1, 0);
+    }
+
+    /*public Matrix subMatrix(int row, int col){
+        double[][] result = new double[row-1][col-1];
+
+    }*/
+
     public void print(){
         System.out.println(Arrays.deepToString(matrix));
     }
