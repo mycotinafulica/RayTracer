@@ -89,6 +89,16 @@ public class Matrix {
                 result.elementAt(3, 0));
     }
 
+    public Matrix transpose(){
+        double[][] result = new double[col][row];
+        for(int r = 0 ; r<row ; r++){
+            for(int c = 0; c<col ; c++){
+                result[c][r] = elementAt(r, c);
+            }
+        }
+        return new Matrix(result);
+    }
+
     public void print(){
         System.out.println(Arrays.deepToString(matrix));
     }

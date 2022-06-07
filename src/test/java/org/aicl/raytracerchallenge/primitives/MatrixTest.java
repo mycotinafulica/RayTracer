@@ -107,4 +107,42 @@ public class MatrixTest {
         Tuple result = m.multiply(t);
         assertTrue(expected.isIdentical(result));
     }
+
+    @Test
+    public void identityMatrixTest(){
+        Matrix m = new Matrix(new double[][]{
+                new double[]{0, 1, 2, 4},
+                new double[]{1, 2, 4, 8},
+                new double[]{2, 4, 8, 16},
+                new double[]{4, 8, 16 ,32}
+        });
+        Matrix I = new Matrix(new double[][]{
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+        });
+        Matrix result = m.multiply(I);
+        assertTrue(result.isEqual(m));
+
+        Matrix result2 = I.multiply(m);
+        assertTrue(result2.isEqual(m));
+    }
+
+    @Test
+    public void testTranspose(){
+        Matrix m = new Matrix(new double[][]{
+                new double[]{0, 9, 3, 0},
+                new double[]{9, 8, 0, 8},
+                new double[]{1, 8, 5, 3},
+                new double[]{0, 0, 5, 8}
+        });
+        Matrix expected = new Matrix(new double[][]{
+                new double[]{0, 9,1 , 0},
+                new double[]{9, 8, 8, 0},
+                new double[]{3, 0, 5, 5},
+                new double[]{0, 8, 3, 8}
+        });
+        assertTrue(expected.isEqual(m.transpose()));
+    }
 }
