@@ -100,10 +100,17 @@ public class Matrix {
     }
 
     public double determinant(){
-        if(row != 2 || col !=2){
-            throw new IllegalArgumentException("Only calculating determinant of 2x2 matrix is supported!");
+        if(row != col)
+            throw new IllegalArgumentException("Only square matrices supported!");
+        if(row != 2){
+            double determinant = 0;
+            for(int i = 0 ; i < col ; i++){
+                determinant += elementAt(0, i) * cofactor(0, i);
+            }
+            return determinant;
+        }else{
+            return elementAt(0, 0)*elementAt(1,1) - elementAt(0, 1)*elementAt(1, 0);
         }
-        return elementAt(0, 0)*elementAt(1,1) - elementAt(0, 1)*elementAt(1, 0);
     }
 
     public Matrix subMatrix(int discardRow, int discardCol){
@@ -126,6 +133,20 @@ public class Matrix {
         return new Matrix(result);
     }
 
+    public double minor(int discardRow, int discardCol){
+        Matrix subMat = subMatrix(discardRow, discardCol);
+        return subMat.determinant();
+    }
+
+    public double cofactor(int discardRow, int discardCol){
+        double minor = minor(discardRow, discardCol);
+        if((discardRow + discardCol) % 2 == 0){
+            return minor;
+        }
+        else{
+            return -minor;
+        }
+    }
     public void print(){
         System.out.println(Arrays.deepToString(matrix));
     }

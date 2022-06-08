@@ -196,4 +196,53 @@ public class MatrixTest {
         });
         assertEquals(17.0, m.determinant(), 0.00001);
     }
+
+    @Test
+    public void testMinorCalculation(){
+        Matrix m = new Matrix(new double[][]{
+                new double[]{3, 5, 0},
+                new double[]{2, -1, -7},
+                new double[]{6, -1, 5}
+        });
+        Matrix subMat = m.subMatrix(1, 0);
+        double determinant = subMat.determinant();
+        assertEquals(determinant, m.minor(1, 0), 0.00001);
+    }
+
+    @Test
+    public void testCofactor(){
+        Matrix m = new Matrix(new double[][]{
+                new double[]{3, 5, 0},
+                new double[]{2, -1, -7},
+                new double[]{6, -1, 5}
+        });
+        assertEquals(m.minor(0, 0), m.cofactor(0, 0), 0.0001);
+        assertEquals(-m.minor(1, 0), m.cofactor(1, 0), 0.0001);
+    }
+
+    @Test
+    public void testDeterminantLargeMatrix(){
+        Matrix m = new Matrix(new double[][]{
+                new double[]{1, 2, 6},
+                new double[]{-5, 8, -4},
+                new double[]{2, 6, 4}
+        });
+        assertEquals(56, m.cofactor(0, 0), 0.00001);
+        assertEquals(12, m.cofactor(0, 1), 0.00001);
+        assertEquals(-46, m.cofactor(0, 2), 0.00001);
+        assertEquals(-196, m.determinant(), 0.00001);
+
+        m = new Matrix(new double[][]{
+                new double[]{-2, -8, 3, 5},
+                new double[]{-3, 1, 7, 3},
+                new double[]{1, 2, -9, 6},
+                new double[]{-6, 7, 7, -9}
+        });
+
+        assertEquals(690, m.cofactor(0, 0), 0.00001);
+        assertEquals(447, m.cofactor(0, 1), 0.00001);
+        assertEquals(210, m.cofactor(0, 2), 0.00001);
+        assertEquals(51, m.cofactor(0, 3), 0.00001);
+        assertEquals(-4071, m.determinant(), 0.00001);
+    }
 }
