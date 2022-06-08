@@ -321,5 +321,6 @@ public class MatrixTest {
                 new double[]{0.17778, 0.06667, -0.26667, 0.33333}
         });
         assertTrue(expected.isEqual(inverted));
+        assertTrue(inverted.multiply(m).isEqual(identity));
     }
 }
