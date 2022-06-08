@@ -288,8 +288,38 @@ public class MatrixTest {
                 new double[]{-0.52256, -0.81391, -0.30075, 0.30639}
         });
 
-        inverted.print();
+        assertTrue(expected.isEqual(inverted));
 
+        m = new Matrix(new double[][]{
+                new double[]{8, -5, 9, 2},
+                new double[]{7, 5, 6, 1},
+                new double[]{-6, 0, 9, 6},
+                new double[]{-3, 0, -9, -4}
+        });
+
+        inverted = m.inverse();
+        Matrix identity = new Matrix(new double[][]{
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+        });
+        assertTrue(inverted.multiply(m).isEqual(identity));
+
+        m = new Matrix(new double[][]{
+                new double[]{9, 3, 0, 9},
+                new double[]{-5, -2, -6, -3},
+                new double[]{-4, 9, 6, 4},
+                new double[]{-7, 6, 6, 2}
+        });
+
+        inverted = m.inverse();
+        expected = new Matrix(new double[][]{
+                new double[]{-0.04074, -0.07778, 0.14444, -0.22222},
+                new double[]{-0.07778, 0.03333, 0.36667, -0.33333},
+                new double[]{-0.02901, -0.14630, -0.10926, 0.12963},
+                new double[]{0.17778, 0.06667, -0.26667, 0.33333}
+        });
         assertTrue(expected.isEqual(inverted));
     }
 }

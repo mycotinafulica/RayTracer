@@ -48,8 +48,10 @@ public class Matrix {
 
         for(int r = 0 ; r<row ; r++){
             for(int c = 0 ; c < col ; c++){
-                if(!FloatEquality.isEqual(elementAt(r, c), m.elementAt(r, c)))
+                if(!FloatEquality.isEqual(elementAt(r, c), m.elementAt(r, c))) {
+//                    System.out.println(elementAt(r, c) + " is not equal to " + m.elementAt(r, c));
                     return false;
+                }
             }
         }
 
