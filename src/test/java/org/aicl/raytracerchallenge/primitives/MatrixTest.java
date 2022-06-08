@@ -322,5 +322,24 @@ public class MatrixTest {
         });
         assertTrue(expected.isEqual(inverted));
         assertTrue(inverted.multiply(m).isEqual(identity));
+        assertTrue(identity.isEqual(identity.inverse()));
+    }
+
+    @Test
+    public void tryInversing(){
+        Matrix m1 = new Matrix(new double[][]{
+                new double[]{3, -9, 7, 3},
+                new double[]{3, -8, 2, -9},
+                new double[]{-4, 4, 4, 1},
+                new double[]{-6, 5, -1, 1}
+        });
+        Matrix m2 = new Matrix(new double[][]{
+                new double[]{8, 2, 2, 2},
+                new double[]{3, -1, 7, 0},
+                new double[]{7, 0, 5, 4},
+                new double[]{6, -2, 0, 5}
+        });
+        Matrix m3 = m1.multiply(m2);
+        assertTrue(m1.isEqual(m3.multiply(m2.inverse())));
     }
 }

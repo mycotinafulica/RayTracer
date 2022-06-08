@@ -86,4 +86,8 @@ public class Tuple {
     public boolean isAVector(){
         return isEqual(w, 0);
     }
+
+    public String toString(){
+        return "[" + x + ", " + y + ", " + z + ", " + w + "]";
+    }
 }
