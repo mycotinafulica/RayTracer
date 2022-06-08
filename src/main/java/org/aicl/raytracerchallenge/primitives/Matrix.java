@@ -147,6 +147,27 @@ public class Matrix {
             return -minor;
         }
     }
+
+    public boolean isInvertible(){
+        if(determinant() == 0)
+            return false;
+
+        return true;
+    }
+
+    public Matrix inverse(){
+        double[][] result  = new double[row][col];
+        double determinant = determinant();
+        for(int r = 0; r<row ; r++){
+            for(int c = 0; c<col ; c++){
+                double cofactor = cofactor(r, c);
+                result[c][r] = cofactor/determinant;
+            }
+        }
+
+        return new Matrix(result);
+    }
+
     public void print(){
         System.out.println(Arrays.deepToString(matrix));
     }
