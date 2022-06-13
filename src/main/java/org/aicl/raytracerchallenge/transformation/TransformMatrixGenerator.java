@@ -24,4 +24,37 @@ public class TransformMatrixGenerator {
                 }
         );
     }
+
+    public Matrix rotateX(double rad){
+        return new Matrix(
+                new double[][]{
+                        new double[]{1, 0, 0, 0},
+                        new double[]{0, Math.cos(rad), -Math.sin(rad), 0},
+                        new double[]{0, Math.sin(rad), Math.cos(rad), 0},
+                        new double[]{0, 0, 0, 1}
+                }
+        );
+    }
+
+    public Matrix rotateY(double rad){
+        return new Matrix(
+                new double[][]{
+                        new double[]{Math.cos(rad), 0, Math.sin(rad) , 0},
+                        new double[]{0, 1, 0, 0},
+                        new double[]{-Math.sin(rad), 0, Math.cos(rad), 0},
+                        new double[]{0, 0, 0, 1}
+                }
+        );
+    }
+
+    public Matrix rotateZ(double rad){
+        return new Matrix(
+                new double[][]{
+                        new double[]{Math.cos(rad), -Math.sin(rad), 0, 0},
+                        new double[]{Math.sin(rad), Math.cos(rad), 0, 0},
+                        new double[]{0, 0, 1, 0},
+                        new double[]{0, 0, 0, 1}
+                }
+        );
+    }
 }
