@@ -103,4 +103,33 @@ public class TransformMatrixGeneratorTest {
         assertTrue(expectedHalf.isIdentical(halfQuarter.multiply(p)));
         assertTrue(expectedFull.isIdentical(fullQuarter.multiply(p)));
     }
+
+    @Test
+    public void shearingTest(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        Point p = new Point(2, 3, 4);
+        Matrix shear = generator.shearing(1, 0, 0, 0, 0, 0);
+        Point expected = new Point(5, 3, 4);
+        assertTrue(expected.isIdentical(shear.multiply(p)));
+
+        shear = generator.shearing(0, 1, 0, 0, 0, 0);
+        expected = new Point(6, 3, 4);
+        assertTrue(expected.isIdentical(shear.multiply(p)));
+
+        shear = generator.shearing(0, 0, 1, 0, 0, 0);
+        expected = new Point(2, 5, 4);
+        assertTrue(expected.isIdentical(shear.multiply(p)));
+
+        shear = generator.shearing(0, 0, 0, 1, 0, 0);
+        expected = new Point(2, 7, 4);
+        assertTrue(expected.isIdentical(shear.multiply(p)));
+
+        shear = generator.shearing(0, 0, 0, 0, 1, 0);
+        expected = new Point(2, 3, 6);
+        assertTrue(expected.isIdentical(shear.multiply(p)));
+
+        shear = generator.shearing(0, 0, 0, 0, 0, 1);
+        expected = new Point(2, 3, 7);
+        assertTrue(expected.isIdentical(shear.multiply(p)));
+    }
 }
