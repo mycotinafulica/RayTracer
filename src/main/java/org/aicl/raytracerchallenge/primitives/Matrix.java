@@ -151,10 +151,7 @@ public class Matrix {
     }
 
     public boolean isInvertible(){
-        if(determinant() == 0)
-            return false;
-
-        return true;
+        return determinant() != 0;
     }
 
     public Matrix inverse(){
