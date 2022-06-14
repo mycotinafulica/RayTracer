@@ -132,4 +132,30 @@ public class TransformMatrixGeneratorTest {
         expected = new Point(2, 3, 7);
         assertTrue(expected.isIdentical(shear.multiply(p)));
     }
+
+    @Test
+    public void testChainingTransformation(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        Point p = new Point(1, 0, 1);
+        Matrix rotation  = generator.rotateX(Math.PI/2);
+        Matrix scaling   = generator.scale(5, 5,5);
+        Matrix translate = generator.translate(10, 5, 7);
+
+        Tuple p2 = rotation.multiply(p);
+        Point expected = new Point(1, -1, 0);
+        assertTrue(expected.isIdentical(p2));
+
+        Tuple p3 = scaling.multiply(p2);
+        expected = new Point(5, -5, 0);
+        assertTrue(expected.isIdentical(p3));
+
+        Tuple p4 = translate.multiply(p3);
+        expected = new Point(15, 0, 7);
+        assertTrue(expected.isIdentical(p4));
+
+        Matrix chainedTransform = translate.multiply(scaling.multiply(rotation));
+        Tuple chained  = chainedTransform.multiply(p);
+        expected = new Point(15, 0, 7);
+        assertTrue(expected.isIdentical(chained));
+    }
 }
