@@ -4,12 +4,17 @@ import org.aicl.raytracerchallenge.primitives.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class Sphere implements Shape {
     public double radius = 1.0;
     public Point origin = new Point(0, 0, 0);
 
-    public Sphere(){}
+    private String id;
+
+    public Sphere(){
+        id = UUID.randomUUID().toString();
+    }
 
     public Sphere(double radius, Point origin){
         this.radius = radius;
@@ -36,5 +41,15 @@ public class Sphere implements Shape {
             return new RayIntersection(2, Arrays.asList(t1, t2)
                     , Arrays.asList(this, this));
         }
+    }
+
+    @Override
+    public boolean isSame(Shape input) {
+        return id.equals(input.getId());
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 }

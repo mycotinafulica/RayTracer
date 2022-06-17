@@ -76,4 +76,68 @@ public class RayTest {
         assertEquals(-6.0, xs.time.get(0), 0.0001);
         assertEquals(-4.0, xs.time.get(1), 0.0001);
     }
+
+    @Test
+    public void rayIntersectionWithObject(){
+        Sphere sphere = new Sphere();
+        RayIntersection i = new RayIntersection(3.5, sphere);
+        assertEquals(3.5, i.time.get(0), 0.00001);
+        assertTrue(i.intersectedShape.get(0).isSame(sphere));
+
+        RayIntersection i2 = new RayIntersection(2, sphere);
+        RayIntersection concatenated = i.concat(i2);
+        assertEquals(2, concatenated.count);
+        assertEquals(3.5, concatenated.time.get(0), 0.00001f);
+        assertEquals(2, concatenated.time.get(1), 0.00001f);
+    }
+
+    @Test
+    public void rayIntersectionIntersectObject(){
+        Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        Sphere sphere = new Sphere();
+        RayIntersection xs = sphere.intersect(ray);
+        assertEquals(2, xs.count);
+        assertTrue(xs.intersectedShape.get(0).isSame(sphere));
+        assertTrue(xs.intersectedShape.get(1).isSame(sphere));
+    }
+
+    @Test
+    public void testHit1(){
+        Sphere s = new Sphere();
+        RayIntersection i1 = new RayIntersection(1, s);
+        RayIntersection i2 = new RayIntersection(2, s);
+        RayIntersection xs = i1.copy().concat(i2);
+        assertEquals(1.0, xs.hit().time.get(0), 0.00001);
+        assertTrue(i1.isEqual(xs.hit()));
+    }
+
+    @Test
+    public void testHit2(){
+        Sphere s = new Sphere();
+        RayIntersection i1 = new RayIntersection(-1, s);
+        RayIntersection i2 = new RayIntersection(1, s);
+        RayIntersection xs = i1.copy().concat(i2);
+        assertEquals(1.0, xs.hit().time.get(0), 0.00001);
+        assertTrue(i2.isEqual(xs.hit()));
+    }
+    @Test
+    public void testHit3(){
+        Sphere s = new Sphere();
+        RayIntersection i1 = new RayIntersection(-2, s);
+        RayIntersection i2 = new RayIntersection(-1, s);
+        RayIntersection xs = i1.copy().concat(i2);
+        assertNull(xs.hit());
+    }
+
+    @Test
+    public void testHit4(){
+        Sphere s = new Sphere();
+        RayIntersection i1 = new RayIntersection(5, s);
+        RayIntersection i2 = new RayIntersection(7, s);
+        RayIntersection i3 = new RayIntersection(-3, s);
+        RayIntersection i4 = new RayIntersection(2, s);
+        RayIntersection xs = i1.copy().concat(i2).concat(i3).concat(i4);
+        assertEquals(2.0, xs.hit().time.get(0), 0.00001);
+        assertTrue(i4.isEqual(xs.hit()));
+    }
 }
