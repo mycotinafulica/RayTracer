@@ -2,6 +2,9 @@ package org.aicl.raytracerchallenge.primitives.shape;
 
 import org.aicl.raytracerchallenge.primitives.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Sphere implements Shape {
     public double radius = 1.0;
     public Point origin = new Point(0, 0, 0);
@@ -25,12 +28,13 @@ public class Sphere implements Shape {
 
         double discriminant = b*b - 4*a*c;
         if(discriminant < 0){
-            return new RayIntersection(0, null);
+            return new RayIntersection(0, List.of(), List.of());
         }
         else{
             double t1 = (-b - Math.sqrt(discriminant))/2*a;
             double t2 = (-b + Math.sqrt(discriminant))/2*a;
-            return new RayIntersection(2, new double[]{t1, t2});
+            return new RayIntersection(2, Arrays.asList(t1, t2)
+                    , Arrays.asList(this, this));
         }
     }
 }

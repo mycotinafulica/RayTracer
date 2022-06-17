@@ -35,8 +35,8 @@ public class RayTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertEquals(4.0, xs.time[0], 0.0001);
-        assertEquals(6.0, xs.time[1], 0.0001);
+        assertEquals(4.0, xs.time.get(0), 0.0001);
+        assertEquals(6.0, xs.time.get(1), 0.0001);
     }
 
     @Test
@@ -45,8 +45,8 @@ public class RayTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertEquals(5.0, xs.time[0], 0.0001);
-        assertEquals(5.0, xs.time[1], 0.0001);
+        assertEquals(5.0, xs.time.get(0), 0.0001);
+        assertEquals(5.0, xs.time.get(1), 0.0001);
     }
 
     @Test
@@ -63,8 +63,8 @@ public class RayTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertEquals(-1.0, xs.time[0], 0.0001);
-        assertEquals(1.0, xs.time[1], 0.0001);
+        assertEquals(-1.0, xs.time.get(0), 0.0001);
+        assertEquals(1.0, xs.time.get(1), 0.0001);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class RayTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertEquals(-6.0, xs.time[0], 0.0001);
-        assertEquals(-4.0, xs.time[1], 0.0001);
+        assertEquals(-6.0, xs.time.get(0), 0.0001);
+        assertEquals(-4.0, xs.time.get(1), 0.0001);
     }
 }
