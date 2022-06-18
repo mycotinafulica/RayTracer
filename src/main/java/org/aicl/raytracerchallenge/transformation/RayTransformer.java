@@ -6,7 +6,8 @@ public class RayTransformer {
     public enum Type {
         TRANSLATION,
         SCALING,
-        ROTATION
+        ROTATION,
+        IDENTITY
     }
     public static Ray transform(Ray ray, Matrix matrix, RayTransformer.Type transformType){
         //for rotation and scale, it also affects the direction

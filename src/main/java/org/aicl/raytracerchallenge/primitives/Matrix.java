@@ -167,6 +167,15 @@ public class Matrix {
         return new Matrix(result);
     }
 
+    public static Matrix identity(){
+        return new Matrix( new double[][]{
+            new double[]{1, 0, 0, 0},
+            new double[]{0, 1, 0, 0},
+            new double[]{0, 0, 1, 0},
+            new double[]{0, 0, 0, 1}
+        });
+    }
+
     public void print(){
         System.out.println(Arrays.deepToString(matrix));
     }
