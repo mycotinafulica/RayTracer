@@ -1,6 +1,8 @@
 package org.aicl.raytracerchallenge.primitives;
 
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
+import org.aicl.raytracerchallenge.transformation.RayTransformer;
+import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -139,5 +141,31 @@ public class RayTest {
         RayIntersection xs = i1.copy().concat(i2).concat(i3).concat(i4);
         assertEquals(2.0, xs.hit().time.get(0), 0.00001);
         assertTrue(i4.isEqual(xs.hit()));
+    }
+
+    @Test
+    public void rayTransformTranslate(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        Ray ray = new Ray(new Point(1, 2, 3), new Vector(0, 1, 0));
+        Matrix m = generator.translate(3, 4, 5);
+
+        Point  expectedNewOrigin    = new Point(4, 6, 8);
+        Vector expectedNewDirection = new Vector(0, 1, 0);
+        Ray newRay = RayTransformer.transform(ray, m, RayTransformer.Type.TRANSLATION);
+        assertTrue(expectedNewOrigin.isIdentical(newRay.origin));
+        assertTrue(expectedNewDirection.isIdentical(newRay.direction));
+    }
+
+    @Test
+    public void rayTransformScale(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        Ray ray = new Ray(new Point(1, 2, 3), new Vector(0, 1, 0));
+        Matrix m = generator.scale(2, 3, 4);
+
+        Point  expectedNewOrigin    = new Point(2, 6, 12);
+        Vector expectedNewDirection = new Vector(0, 3, 0);
+        Ray newRay = RayTransformer.transform(ray, m, RayTransformer.Type.SCALING);
+        assertTrue(expectedNewOrigin.isIdentical(newRay.origin));
+        assertTrue(expectedNewDirection.isIdentical(newRay.direction));
     }
 }
