@@ -176,4 +176,22 @@ public class TupleTest {
         assertTrue(result.isIdentical(TupleOperation.cross(a, b)));
         assertTrue(result.negates().isIdentical(TupleOperation.cross(b, a)));
     }
+
+    @Test
+    public void testReflection(){
+        Vector v = new Vector(1, -1, 0);
+        Vector n = new Vector(0, 1, 0);
+        Vector r = TupleOperation.reflect(v, n);
+        Vector expect = new Vector(1, 1, 0);
+        assertTrue(expect.isIdentical(r));
+    }
+
+    @Test
+    public void testReflection2(){
+        Vector v = new Vector(0, -1, 0);
+        Vector n = new Vector(Math.sqrt(2)/2.0, Math.sqrt(2)/2.0, 0);
+        Vector r = TupleOperation.reflect(v, n);
+        Vector expect = new Vector(1, 0, 0);
+        assertTrue(expect.isIdentical(r));
+    }
 }

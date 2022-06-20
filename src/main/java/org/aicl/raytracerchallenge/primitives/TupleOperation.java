@@ -20,4 +20,8 @@ public class TupleOperation {
     public static Tuple subtract(Tuple a, Tuple b){
         return a.subtract(b);
     }
+
+    public static Vector reflect(Vector in, Vector normal){
+        return new Vector(in.subtract(normal.multiply(2).multiply(TupleOperation.dot(in, normal))));
+    }
 }
