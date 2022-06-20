@@ -14,21 +14,9 @@ public class Tuple {
         this(p.x, p.y, p.z, p.w);
     }
 
-   /* public Tuple addToSelf(Tuple t){
-        this.x += t.x;  this.y += t.y;
-        this.z += t.z;  this.w += t.w;
-        return this;
-    }*/
-
     public Tuple add(Tuple t){
         return new Tuple(x + t.x, y + t.y, z + t.z, w + t.w);
     }
-
- /*   public Tuple subtractSelf(Tuple t){
-        this.x -= t.x; this.y -= t.y;
-        this.z -= t.z; this.w -= t.w;
-        return this;
-    }*/
 
     public Tuple subtract(Tuple t){
         return new Tuple(x - t.x, y - t.y, z - t.z, w - t.w);
@@ -38,32 +26,14 @@ public class Tuple {
         return isEqual(x, t.x) && isEqual(y, t.y) && isEqual(z, t.z) && isEqual(w, t.w);
     }
 
-   /* public Tuple negatesSelf(){
-        x = -x; y = -y; z = -z; w = -w;
-        return this;
-    }*/
-
     public Tuple negates(){
         return new Tuple(-x, -y, -z, -w);
     }
-
-//    public Tuple multiplySelf(double multiplier){
-//        this.x *= multiplier; this.y *= multiplier;
-//        this.z *= multiplier; this.w *= multiplier;
-//        return this;
-//    }
 
     public Tuple multiply(double multiplier){
         return new Tuple(x * multiplier, y * multiplier,
                 z *  multiplier, w * multiplier);
     }
-
-   /* public Tuple divideSelf(double divisor){
-        double multiplier = 1.0f/divisor;
-        multiplySelf(multiplier);
-
-        return this;
-    }*/
 
     public Tuple divide(double divisor){
         double multiplier = 1.0/divisor;
@@ -75,8 +45,7 @@ public class Tuple {
     }
 
     public Tuple normalize(){
-        Tuple result = divide(magnitude());
-        return result;
+        return divide(magnitude());
     }
 
     public boolean isAPoint(){
@@ -90,4 +59,37 @@ public class Tuple {
     public String toString(){
         return "[" + x + ", " + y + ", " + z + ", " + w + "]";
     }
+
+      /* public Tuple divideSelf(double divisor){
+        double multiplier = 1.0f/divisor;
+        multiplySelf(multiplier);
+
+        return this;
+    }*/
+
+    //    public Tuple multiplySelf(double multiplier){
+//        this.x *= multiplier; this.y *= multiplier;
+//        this.z *= multiplier; this.w *= multiplier;
+//        return this;
+//    }
+
+
+   /* public Tuple negatesSelf(){
+        x = -x; y = -y; z = -z; w = -w;
+        return this;
+    }*/
+
+
+ /*   public Tuple subtractSelf(Tuple t){
+        this.x -= t.x; this.y -= t.y;
+        this.z -= t.z; this.w -= t.w;
+        return this;
+    }*/
+
+
+   /* public Tuple addToSelf(Tuple t){
+        this.x += t.x;  this.y += t.y;
+        this.z += t.z;  this.w += t.w;
+        return this;
+    }*/
 }
