@@ -42,14 +42,15 @@ public class TupleTest {
 
     @Test
     public void testAddVectorToPointYieldPoint(){
+//        Point p  = new Point(3, -2, 5);
+//        Vector v = new Vector(-2, 3, 1);
+//        Point target = new Point(1, 1, 6);
+//        p.addToSelf(v);
+//        assertTrue(p.isIdentical(target));
+
         Point p  = new Point(3, -2, 5);
         Vector v = new Vector(-2, 3, 1);
         Point target = new Point(1, 1, 6);
-        p.addToSelf(v);
-        assertTrue(p.isIdentical(target));
-
-        p  = new Point(3, -2, 5);
-        v = new Vector(-2, 3, 1);
         Tuple newP = p.add(v);
         assertTrue(newP.isIdentical(target));
 
@@ -61,15 +62,14 @@ public class TupleTest {
 
     @Test
     public void testSubtractTwoPointYieldVector(){
-        Point p  = new Point(3, 2, 1);
-        Point p2 = new Point(5, 6, 7);
+//        Point p  = new Point(3, 2, 1);
+//        Point p2 = new Point(5, 6, 7);
+//        p.subtractSelf(p2);
+//        assertTrue(p.isIdentical(target));
         Vector target = new Vector(-2, -4, -6);
 
-        p.subtractSelf(p2);
-        assertTrue(p.isIdentical(target));
-
-        p  = new Point(3, 2, 1);
-        p2 = new Point(5, 6, 7);
+        Point p  = new Point(3, 2, 1);
+        Point p2 = new Point(5, 6, 7);
         Tuple newP = p.subtract(p2);
         assertTrue(newP.isIdentical(target));
     }
@@ -110,8 +110,8 @@ public class TupleTest {
         Tuple target = new Tuple(-1, 2, -3, 4);
 
         assertTrue(target.isIdentical(a.negates()));
-        a.negatesSelf();
-        assertTrue(target.isIdentical(a));
+//        a.negatesSelf();
+//        assertTrue(target.isIdentical(a));
     }
 
     @Test
@@ -120,8 +120,8 @@ public class TupleTest {
         Tuple target = new Tuple(3.5f, -7, 10.5, -14);
 
         assertTrue(target.isIdentical(a.multiply(3.5)));
-        a.multiplySelf(3.5);
-        assertTrue(target.isIdentical(a));
+//        a.multiplySelf(3.5);
+//        assertTrue(target.isIdentical(a.multiply(3.5)));
     }
 
     @Test
@@ -130,8 +130,8 @@ public class TupleTest {
         Tuple target = new Tuple(0.5, -1, 1.5, -2);
 
         assertTrue(target.isIdentical(a.divide(2)));
-        a.divideSelf(2);
-        assertTrue(target.isIdentical(a));
+//        a.divideSelf(2);
+//        assertTrue(target.isIdentical(a));
     }
 
     @Test
@@ -154,14 +154,11 @@ public class TupleTest {
         Vector v2 = new Vector(1, 2, 3);
 
         Vector target1 = new Vector(1, 0, 0);
-        v1.normalize();
-        assertTrue(target1.isIdentical(v1));
+        assertTrue(target1.isIdentical(v1.normalize()));
 
         Vector target2 = new Vector(1.0/Math.sqrt(14), 2.0/Math.sqrt(14), 3.0/Math.sqrt(14));
-        v2.normalize();
-        assertTrue(target2.isIdentical(v2));
-
-        assertEquals(1.0, v2.magnitude(), 0.00001);
+        assertTrue(target2.isIdentical(v2.normalize()));
+        assertEquals(1.0, v2.normalize().magnitude(), 0.00001);
     }
 
     @Test

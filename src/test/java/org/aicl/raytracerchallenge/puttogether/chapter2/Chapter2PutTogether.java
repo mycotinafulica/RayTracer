@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Chapter2PutTogether {
     @Test
     public void letsPutTogether(){
-        Vector initialVelocity = (Vector) (new Vector(0.74, 1.3, 0)).normalize().multiplySelf(11.25);
+        Vector initialVelocity = new Vector((new Vector(0.74, 1.3, 0)).normalize().multiply(11.25));
         Point startPoint = new Point(0, 1, 0);
         Projectile p  = new Projectile(startPoint, initialVelocity);
 

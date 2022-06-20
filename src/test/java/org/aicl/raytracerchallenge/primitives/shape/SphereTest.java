@@ -92,4 +92,32 @@ public class SphereTest {
         assertEquals(-6.0, xs.time.get(0), 0.0001);
         assertEquals(-4.0, xs.time.get(1), 0.0001);
     }
+
+    @Test
+    public void testSphereNormals(){
+        Sphere sphere = new Sphere();
+        Vector normalAt = sphere.normalAt(new Point(1, 0, 0));
+        Vector expected = new Vector(1, 0, 0);
+        assertTrue(expected.isIdentical(normalAt));
+
+        normalAt = sphere.normalAt(new Point(0, 1, 0));
+        expected = new Vector(0, 1, 0);
+        assertTrue(expected.isIdentical(normalAt));
+
+        normalAt = sphere.normalAt(new Point(0, 0, 1));
+        expected = new Vector(0, 0, 1);
+        assertTrue(expected.isIdentical(normalAt));
+
+        normalAt = sphere.normalAt(new Point(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0));
+        expected = new Vector(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0);
+        assertTrue(expected.isIdentical(normalAt));
+    }
+
+    @Test
+    public void testNormalsAreNormalized(){
+        Sphere sphere   = new Sphere();
+        Vector normalAt = sphere.normalAt(new Point(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0));
+        Vector expected = new Vector(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0);
+        Tuple normalized = normalAt.normalize();
+    }
 }

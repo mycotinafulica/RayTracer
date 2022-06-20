@@ -74,4 +74,11 @@ public class Sphere implements Shape {
         this.transform = t;
         this.transformType = transformType;
     }
+
+    @Override
+    public Vector normalAt(Point p) {
+        return null;
+    }
+
+
 }

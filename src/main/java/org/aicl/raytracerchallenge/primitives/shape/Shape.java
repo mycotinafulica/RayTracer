@@ -1,8 +1,6 @@
 package org.aicl.raytracerchallenge.primitives.shape;
 
-import org.aicl.raytracerchallenge.primitives.Matrix;
-import org.aicl.raytracerchallenge.primitives.Ray;
-import org.aicl.raytracerchallenge.primitives.RayIntersection;
+import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.transformation.RayTransformer;
 
 public interface Shape {
@@ -13,4 +11,6 @@ public interface Shape {
 
     RayTransformer.Type getTransformType();
     void setTransform(Matrix t, RayTransformer.Type transformType);
+
+    Vector normalAt(Point p);
 }
