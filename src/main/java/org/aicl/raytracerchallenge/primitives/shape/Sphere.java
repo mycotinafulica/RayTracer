@@ -14,7 +14,6 @@ public class Sphere implements Shape {
     private final String id;
 
     private Matrix transform                  = Matrix.identity();
-    private RayTransformer.Type transformType = RayTransformer.Type.IDENTITY;
 
     public Sphere(){
         id = UUID.randomUUID().toString();
@@ -28,7 +27,7 @@ public class Sphere implements Shape {
 
     @Override
     public RayIntersection intersect(Ray r) {
-        Ray transformedRay = RayTransformer.transform(r, transform.inverse(), transformType);
+        Ray transformedRay = RayTransformer.transform(r, transform.inverse());
         //normalize so that we play where the center of the coordinate is (0, 0)
         //simplifying (x-x0)^2 + (y-y0)^2 + (z-z0)^2 = R^2 to x^2 + y^2 + z^2 = R^2
         Tuple sphereToRay = transformedRay.origin.subtract(this.origin);
@@ -65,20 +64,16 @@ public class Sphere implements Shape {
     }
 
     @Override
-    public RayTransformer.Type getTransformType() {
-        return transformType;
-    }
-
-    @Override
-    public void setTransform(Matrix t, RayTransformer.Type transformType) {
-        this.transform = t;
-        this.transformType = transformType;
+    public void setTransform(Matrix m) {
+        transform = m;
     }
 
     @Override
     public Vector normalAt(Point p) {
-        return null;
+        Tuple objectPoint  = transform.inverse().multiply(p);
+        Tuple objectNormal = objectPoint.subtract(origin);
+        Tuple worldNormal  = transform.inverse().transpose().multiply(objectNormal);
+        worldNormal.w = 0;
+        return new Vector(worldNormal.normalize());
     }
-
-
 }

@@ -103,7 +103,7 @@ public class RayTest {
 
         Point  expectedNewOrigin    = new Point(4, 6, 8);
         Vector expectedNewDirection = new Vector(0, 1, 0);
-        Ray newRay = RayTransformer.transform(ray, m, RayTransformer.Type.TRANSLATION);
+        Ray newRay = RayTransformer.transform(ray, m);
         assertTrue(expectedNewOrigin.isIdentical(newRay.origin));
         assertTrue(expectedNewDirection.isIdentical(newRay.direction));
     }
@@ -116,7 +116,7 @@ public class RayTest {
 
         Point  expectedNewOrigin    = new Point(2, 6, 12);
         Vector expectedNewDirection = new Vector(0, 3, 0);
-        Ray newRay = RayTransformer.transform(ray, m, RayTransformer.Type.SCALING);
+        Ray newRay = RayTransformer.transform(ray, m);
         assertTrue(expectedNewOrigin.isIdentical(newRay.origin));
         assertTrue(expectedNewDirection.isIdentical(newRay.direction));
     }

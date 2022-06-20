@@ -9,8 +9,6 @@ public interface Shape {
     String getId();
     Matrix getTransform();
 
-    RayTransformer.Type getTransformType();
-    void setTransform(Matrix t, RayTransformer.Type transformType);
-
+    void setTransform(Matrix m);
     Vector normalAt(Point p);
 }

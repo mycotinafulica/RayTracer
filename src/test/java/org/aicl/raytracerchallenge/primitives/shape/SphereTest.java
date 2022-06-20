@@ -14,8 +14,7 @@ public class SphereTest {
         Sphere sphere = new Sphere();
         assertTrue(Matrix.identity().isEqual(sphere.getTransform()));
         Matrix translation = generator.translate(2, 3, 4);
-        sphere.setTransform(translation, RayTransformer.Type.TRANSLATION);
-
+        sphere.setTransform(translation);
         assertTrue(translation.isEqual(sphere.getTransform()));
     }
 
@@ -25,7 +24,7 @@ public class SphereTest {
         Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
         Sphere sphere = new Sphere();
         Matrix scaleMtx = generator.scale(2, 2, 2);
-        sphere.setTransform(scaleMtx, RayTransformer.Type.SCALING);
+        sphere.setTransform(scaleMtx);
 
         RayIntersection intersection = sphere.intersect(ray);
         assertEquals(2, intersection.count);
@@ -39,7 +38,7 @@ public class SphereTest {
         Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
         Sphere sphere = new Sphere();
         Matrix scaleMtx = generator.translate(5, 0, 0);
-        sphere.setTransform(scaleMtx, RayTransformer.Type.TRANSLATION);
+        sphere.setTransform(scaleMtx);
 
         RayIntersection intersection = sphere.intersect(ray);
         assertEquals(0, intersection.count);
@@ -119,5 +118,30 @@ public class SphereTest {
         Vector normalAt = sphere.normalAt(new Point(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0));
         Vector expected = new Vector(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0);
         Tuple normalized = normalAt.normalize();
+    }
+
+    @Test
+    public void testNormalsAfterTransformationCase1(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        Sphere sphere = new Sphere();
+        Matrix translate = generator.translate(0, 1, 0);
+        sphere.setTransform(translate);
+
+        Vector normal = sphere.normalAt(new Point(0, 1.70711, -0.70711));
+        Vector expected = new Vector(0, 0.70711, -0.70711);
+        assertTrue(expected.isIdentical(normal));
+    }
+
+    @Test
+    public void testNormalsAfterTransformationCase2(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        Sphere sphere = new Sphere();
+        Matrix translate = generator.scale(1, 0.5, 1).multiply(generator.rotateZ(Math.PI/5));
+        sphere.setTransform(translate);
+        
+        Vector normal = sphere.normalAt(new Point(0, Math.sqrt(2)/2.0, -Math.sqrt(2)/2.0));
+        Vector expected = new Vector(0, 0.97014, -0.24254);
+        System.out.println(normal.toString());
+        assertTrue(expected.isIdentical(normal));
     }
 }
