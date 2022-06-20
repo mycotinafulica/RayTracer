@@ -44,4 +44,52 @@ public class SphereTest {
         RayIntersection intersection = sphere.intersect(ray);
         assertEquals(0, intersection.count);
     }
+
+    @Test
+    public void raySphereIntersectionAtTwoPointTest(){
+        Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        Sphere sphere = new Sphere();
+        RayIntersection xs = sphere.intersect(ray);
+        assertEquals(2, xs.count);
+        assertEquals(4.0, xs.time.get(0), 0.0001);
+        assertEquals(6.0, xs.time.get(1), 0.0001);
+    }
+
+    @Test
+    public void raySphereIntersectionAtTangentTest(){
+        Ray ray = new Ray(new Point(0, 1, -5), new Vector(0, 0, 1));
+        Sphere sphere = new Sphere();
+        RayIntersection xs = sphere.intersect(ray);
+        assertEquals(2, xs.count);
+        assertEquals(5.0, xs.time.get(0), 0.0001);
+        assertEquals(5.0, xs.time.get(1), 0.0001);
+    }
+
+    @Test
+    public void raySphereIntersectionMissCaseTest(){
+        Ray ray = new Ray(new Point(0, 2, -5), new Vector(0, 0, 1));
+        Sphere sphere = new Sphere();
+        RayIntersection xs = sphere.intersect(ray);
+        assertEquals(0, xs.count);
+    }
+
+    @Test
+    public void raySphereIntersectionRayOriginOnSphereTest(){
+        Ray ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
+        Sphere sphere = new Sphere();
+        RayIntersection xs = sphere.intersect(ray);
+        assertEquals(2, xs.count);
+        assertEquals(-1.0, xs.time.get(0), 0.0001);
+        assertEquals(1.0, xs.time.get(1), 0.0001);
+    }
+
+    @Test
+    public void raySphereIntersectionSphereBehindRayTest(){
+        Ray ray = new Ray(new Point(0, 0, 5), new Vector(0, 0, 1));
+        Sphere sphere = new Sphere();
+        RayIntersection xs = sphere.intersect(ray);
+        assertEquals(2, xs.count);
+        assertEquals(-6.0, xs.time.get(0), 0.0001);
+        assertEquals(-4.0, xs.time.get(1), 0.0001);
+    }
 }
