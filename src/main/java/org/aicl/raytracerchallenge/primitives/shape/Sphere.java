@@ -10,20 +10,20 @@ import java.util.UUID;
 public class Sphere implements Shape {
     public double radius = 1.0;
     public Point origin = new Point(0, 0, 0);
-
     private final String id;
+    private Matrix transform = Matrix.identity();
+    private Material material;
 
-    private Matrix transform                  = Matrix.identity();
-
-    public Sphere(){
-        id = UUID.randomUUID().toString();
+    public Sphere() {
+        id       = UUID.randomUUID().toString();
+        material = new Material();
     }
 
-    public Sphere(double radius, Point origin){
+    /*public Sphere(double radius, Point origin){
         this();
         this.radius = radius;
         this.origin = origin;
-    }
+    }*/
 
     @Override
     public RayIntersection intersect(Ray r) {
@@ -75,5 +75,15 @@ public class Sphere implements Shape {
         Tuple worldNormal  = transform.inverse().transpose().multiply(objectNormal);
         worldNormal.w = 0;
         return new Vector(worldNormal.normalize());
+    }
+
+    @Override
+    public void setMaterial(Material m) {
+        material = m;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return material;
     }
 }

@@ -8,7 +8,10 @@ public interface Shape {
     boolean isSame(Shape input);
     String getId();
     Matrix getTransform();
-
     void setTransform(Matrix m);
     Vector normalAt(Point p);
+
+    void setMaterial(Material m);
+
+    Material getMaterial();
 }

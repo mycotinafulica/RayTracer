@@ -144,4 +144,17 @@ public class SphereTest {
         System.out.println(normal.toString());
         assertTrue(expected.isIdentical(normal));
     }
+
+    @Test
+    public void sphereMaterialTest(){
+        Sphere sphere = new Sphere();
+        Material m    = new Material();
+        assertTrue(sphere.getMaterial().isIdentical(m));
+
+        sphere = new Sphere();
+        m    = new Material();
+        m.ambient = 1;
+        sphere.setMaterial(m);
+        assertTrue(sphere.getMaterial().isIdentical(m));
+    }
 }
