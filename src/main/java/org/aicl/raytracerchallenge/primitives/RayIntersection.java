@@ -2,6 +2,7 @@ package org.aicl.raytracerchallenge.primitives;
 
 import org.aicl.raytracerchallenge.primitives.shape.Shape;
 import org.aicl.raytracerchallenge.utilities.FloatEquality;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,49 +10,61 @@ import java.util.List;
 
 public class RayIntersection {
     public int count;
-    public ArrayList<Double> time = new ArrayList<>();
-    public ArrayList<Shape> intersectedShape = new ArrayList<>();
+    /*public ArrayList<Double> time = new ArrayList<>();
+    public ArrayList<Shape> intersectedShape = new ArrayList<>();*/
+
+    private ArrayList<Intersection> intersections = new ArrayList<>();
 
     private int smallestNonNegIdx  = -1;
     private double smallestNonNegTime = 900000000;
 
-    public RayIntersection(int count, List<Double> time, List<Shape> intersectedShape){
+    public RayIntersection(int count, List<Intersection> inputIntersection){
         this.count = count;
-        for(int i = 0 ; i < time.size() ; i++){
-            this.time.add(time.get(i));
-            this.intersectedShape.add(intersectedShape.get(i));
-            checkIfSmallest(time.get(i), this.time.size());
+        for(int i = 0 ; i < inputIntersection.size() ; i++){
+            intersections.add(inputIntersection.get(i));
+            checkIfSmallest(intersections.get(i).time, intersections.size());
         }
     }
 
     public RayIntersection(double time, Shape intersectedShape){
         this.count = 1;
-        this.time.add(time);
-        this.intersectedShape.add(intersectedShape);
-        checkIfSmallest(time, this.time.size());
+        intersections.add(new Intersection(time, intersectedShape));
+        checkIfSmallest(time, intersections.size());
     }
 
     public RayIntersection concat(RayIntersection rayIntersection){
         this.count += rayIntersection.count;
         for(int i = 0 ; i < rayIntersection.count; i++){
-            this.time.add(rayIntersection.time.get(i));
-            this.intersectedShape.add(rayIntersection.intersectedShape.get(i));
+            Intersection intersectionAtIdx = rayIntersection.intersections.get(i);
+            intersections.add(new Intersection(intersectionAtIdx.time, intersectionAtIdx.intersectedShape));
 
-            checkIfSmallest(rayIntersection.time.get(i), this.time.size());
+            checkIfSmallest(intersectionAtIdx.time, this.intersections.size());
         }
 
         return this;
     }
 
-    public RayIntersection hit(){
+    public double getTime(int index){
+        return intersections.get(index).time;
+    }
+
+    public Shape getIntersectedShape(int index){
+        return intersections.get(index).intersectedShape;
+    }
+
+    public Intersection getIntersection(int idx){
+        return intersections.get(idx);
+    }
+
+    public Intersection hit(){
         if(smallestNonNegIdx == -1)
             return null;
         else
-            return new RayIntersection(time.get(smallestNonNegIdx), intersectedShape.get(smallestNonNegIdx));
+            return intersections.get(smallestNonNegIdx);
     }
 
     public RayIntersection copy(){
-        RayIntersection result = new RayIntersection(this.count, this.time, this.intersectedShape);
+        RayIntersection result = new RayIntersection(this.count, intersections);
         result.setSmallestNonNegIdx(smallestNonNegIdx);
         result.setSmallestNonNegTime(smallestNonNegTime);
         return  result;
@@ -61,8 +74,7 @@ public class RayIntersection {
         if(this.count != input.count)
             return false;
         for(int i = 0 ; i < count ; i++){
-            if(!FloatEquality.isEqual(this.time.get(i), input.time.get(i))
-                || !this.intersectedShape.get(i).isSame(input.intersectedShape.get(i))){
+            if(!intersections.get(i).isEqual(input.intersections.get(i))){
                 return false;
             }
         }

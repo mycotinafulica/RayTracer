@@ -35,14 +35,14 @@ public class RayTest {
     public void rayIntersectionConcatenation(){
         Sphere sphere = new Sphere();
         RayIntersection i = new RayIntersection(3.5, sphere);
-        assertEquals(3.5, i.time.get(0), 0.00001);
-        assertTrue(i.intersectedShape.get(0).isSame(sphere));
+        assertEquals(3.5, i.getTime(0), 0.00001);
+        assertTrue(i.getIntersectedShape(0).isSame(sphere));
 
         RayIntersection i2 = new RayIntersection(2, sphere);
         RayIntersection concatenated = i.concat(i2);
         assertEquals(2, concatenated.count);
-        assertEquals(3.5, concatenated.time.get(0), 0.00001f);
-        assertEquals(2, concatenated.time.get(1), 0.00001f);
+        assertEquals(3.5, concatenated.getTime(0), 0.00001f);
+        assertEquals(2, concatenated.getTime(1), 0.00001f);
     }
 
     @Test
@@ -51,8 +51,8 @@ public class RayTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertTrue(xs.intersectedShape.get(0).isSame(sphere));
-        assertTrue(xs.intersectedShape.get(1).isSame(sphere));
+        assertTrue(xs.getIntersectedShape(0).isSame(sphere));
+        assertTrue(xs.getIntersectedShape(1).isSame(sphere));
     }
 
     @Test
@@ -61,8 +61,8 @@ public class RayTest {
         RayIntersection i1 = new RayIntersection(1, s);
         RayIntersection i2 = new RayIntersection(2, s);
         RayIntersection xs = i1.copy().concat(i2);
-        assertEquals(1.0, xs.hit().time.get(0), 0.00001);
-        assertTrue(i1.isEqual(xs.hit()));
+        assertEquals(1.0, xs.hit().time, 0.00001);
+        assertTrue(i1.getIntersection(0).isEqual(xs.hit()));
     }
 
     @Test
@@ -71,8 +71,8 @@ public class RayTest {
         RayIntersection i1 = new RayIntersection(-1, s);
         RayIntersection i2 = new RayIntersection(1, s);
         RayIntersection xs = i1.copy().concat(i2);
-        assertEquals(1.0, xs.hit().time.get(0), 0.00001);
-        assertTrue(i2.isEqual(xs.hit()));
+        assertEquals(1.0, xs.hit().time, 0.00001);
+        assertTrue(i2.getIntersection(0).isEqual(xs.hit()));
     }
     @Test
     public void testHit3(){
@@ -91,8 +91,8 @@ public class RayTest {
         RayIntersection i3 = new RayIntersection(-3, s);
         RayIntersection i4 = new RayIntersection(2, s);
         RayIntersection xs = i1.copy().concat(i2).concat(i3).concat(i4);
-        assertEquals(2.0, xs.hit().time.get(0), 0.00001);
-        assertTrue(i4.isEqual(xs.hit()));
+        assertEquals(2.0, xs.hit().time, 0.00001);
+        assertTrue(i4.getIntersection(0).isEqual(xs.hit()));
     }
 
     @Test

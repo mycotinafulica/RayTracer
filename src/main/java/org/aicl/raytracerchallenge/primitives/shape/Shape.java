@@ -6,6 +6,8 @@ import org.aicl.raytracerchallenge.transformation.RayTransformer;
 public interface Shape {
     RayIntersection intersect(Ray r);
     boolean isSame(Shape input);
+
+    boolean isSameCharacteristics(Shape shape);
     String getId();
     Matrix getTransform();
     void setTransform(Matrix m);

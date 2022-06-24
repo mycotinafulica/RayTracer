@@ -11,4 +11,8 @@ public class PointLight {
         this.position  = position;
         this.intensity = intensity;
     }
+
+    public boolean isIdentical(PointLight light){
+        return position.isIdentical(light.position) && intensity.isIdentical(light.intensity);
+    }
 }

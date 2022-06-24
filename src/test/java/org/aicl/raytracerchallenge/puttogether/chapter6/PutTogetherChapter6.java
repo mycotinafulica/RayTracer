@@ -35,12 +35,12 @@ public class PutTogetherChapter6 {
                 Ray ray = new Ray(rayOrigin, new Vector(direction.normalize()));
                 RayIntersection xs = sphere.intersect(ray);
                 if(xs.count != 0){
-                    Tuple pointAtHit = ray.position(xs.hit().time.get(0));
+                    Tuple pointAtHit = ray.position(xs.hit().time);
                     Vector normal    = sphere.normalAt(new Point(pointAtHit));
                     System.out.println("direction :" + direction.toString());
                     System.out.println("normal :" + normal.toString());
                     Vector eyev      = new Vector(direction.normalize().negates()); //new Vector(new Vector(10, 10, -10).normalize()); //specular would be when the light -- eye -- spehere in one straight line
-                    Color color      = LightSampler.lighting(xs.hit().intersectedShape.get(0).getMaterial(), light, new Point(pointAtHit), eyev, normal);
+                    Color color      = LightSampler.lighting(xs.hit().intersectedShape.getMaterial(), light, new Point(pointAtHit), eyev, normal);
                     c.writePixel(x, y, color);
                 }
             }

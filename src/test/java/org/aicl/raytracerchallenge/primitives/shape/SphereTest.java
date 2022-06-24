@@ -28,8 +28,8 @@ public class SphereTest {
 
         RayIntersection intersection = sphere.intersect(ray);
         assertEquals(2, intersection.count);
-        assertEquals(3, intersection.time.get(0), .000001);
-        assertEquals(7, intersection.time.get(1), .000001);
+        assertEquals(3, intersection.getTime(0), .000001);
+        assertEquals(7, intersection.getTime(1), .000001);
     }
 
     @Test
@@ -50,8 +50,8 @@ public class SphereTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertEquals(4.0, xs.time.get(0), 0.0001);
-        assertEquals(6.0, xs.time.get(1), 0.0001);
+        assertEquals(4.0, xs.getTime(0), 0.0001);
+        assertEquals(6.0, xs.getTime(1), 0.0001);
     }
 
     @Test
@@ -60,8 +60,8 @@ public class SphereTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertEquals(5.0, xs.time.get(0), 0.0001);
-        assertEquals(5.0, xs.time.get(1), 0.0001);
+        assertEquals(5.0, xs.getTime(0), 0.0001);
+        assertEquals(5.0, xs.getTime(1), 0.0001);
     }
 
     @Test
@@ -78,8 +78,8 @@ public class SphereTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertEquals(-1.0, xs.time.get(0), 0.0001);
-        assertEquals(1.0, xs.time.get(1), 0.0001);
+        assertEquals(-1.0, xs.getTime(0), 0.0001);
+        assertEquals(1.0, xs.getTime(1), 0.0001);
     }
 
     @Test
@@ -88,8 +88,8 @@ public class SphereTest {
         Sphere sphere = new Sphere();
         RayIntersection xs = sphere.intersect(ray);
         assertEquals(2, xs.count);
-        assertEquals(-6.0, xs.time.get(0), 0.0001);
-        assertEquals(-4.0, xs.time.get(1), 0.0001);
+        assertEquals(-6.0, xs.getTime(0), 0.0001);
+        assertEquals(-4.0, xs.getTime(1), 0.0001);
     }
 
     @Test

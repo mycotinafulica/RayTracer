@@ -38,13 +38,13 @@ public class Sphere implements Shape {
 
         double discriminant = b*b - 4*a*c;
         if(discriminant < 0){
-            return new RayIntersection(0, List.of(), List.of());
+            return new RayIntersection(0, List.of());
         }
         else{
             double t1 = (-b - Math.sqrt(discriminant))/(2*a);
             double t2 = (-b + Math.sqrt(discriminant))/(2*a);
-            return new RayIntersection(2, Arrays.asList(t1, t2)
-                    , Arrays.asList(this, this));
+            return new RayIntersection(2, Arrays.asList(new Intersection(t1, this)
+                    , new Intersection(t2, this)));
         }
     }
 
@@ -52,6 +52,21 @@ public class Sphere implements Shape {
     public boolean isSame(Shape input) {
         return id.equals(input.getId());
     }
+
+    @Override
+    public boolean isSameCharacteristics(Shape shape) {
+        if(shape instanceof Sphere){
+            if(transform.isEqual(shape.getTransform())){
+                if(material.isIdentical(shape.getMaterial()))
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+        return false;
+    }
+
 
     @Override
     public String getId() {
