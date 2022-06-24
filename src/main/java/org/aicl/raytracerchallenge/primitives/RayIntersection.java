@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class RayIntersection {
@@ -86,6 +87,10 @@ public class RayIntersection {
             smallestNonNegTime = time;
             smallestNonNegIdx  = currentSize - 1;
         }
+    }
+
+    public void sort(){
+        Collections.sort(intersections);
     }
 
     public void setSmallestNonNegIdx(int smallestNonNegIdx) {

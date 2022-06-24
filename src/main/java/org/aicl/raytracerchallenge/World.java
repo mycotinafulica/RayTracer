@@ -21,9 +21,14 @@ public class World {
         this.lights.addAll(lights);
     }
 
-   /* public RayIntersection intersect(Ray ray){
-
-    }*/
+    public RayIntersection intersect(Ray ray){
+        RayIntersection intersections = new RayIntersection(0, List.of());
+        for(int i = 0; i < shapes.size() ; i++){
+            RayIntersection spaheIntersect = shapes.get(i).intersect(ray);
+            intersections.concat(spaheIntersect);
+        }
+        return intersections;
+    }
 
     public boolean containsLight(PointLight light){
         for(int i = 0; i < lights.size() ; i++){

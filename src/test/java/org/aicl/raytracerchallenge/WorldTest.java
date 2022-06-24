@@ -2,9 +2,7 @@ package org.aicl.raytracerchallenge;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.aicl.raytracerchallenge.primitives.Color;
-import org.aicl.raytracerchallenge.primitives.Material;
-import org.aicl.raytracerchallenge.primitives.Point;
+import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.primitives.light.PointLight;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
@@ -36,5 +34,18 @@ public class WorldTest {
         assertTrue(world.containsLight(light));
         assertTrue(world.containsObject(s1));
         assertTrue(world.containsObject(s2));
+    }
+
+    @Test
+    public void intersectionRayOnDefaultWorldTest(){
+        Ray r   = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        World w = World.createDefault();
+        RayIntersection intersection = w.intersect(r);
+        intersection.sort();
+        assertEquals(4, intersection.count);
+        assertEquals(4, intersection.getTime(0), 0.00001);
+        assertEquals(4.5, intersection.getTime(1), 0.00001);
+        assertEquals(5.5, intersection.getTime(2), 0.00001);
+        assertEquals(6, intersection.getTime(3), 0.00001);
     }
 }
