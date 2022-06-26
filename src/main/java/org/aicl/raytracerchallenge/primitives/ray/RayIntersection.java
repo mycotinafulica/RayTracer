@@ -1,11 +1,9 @@
-package org.aicl.raytracerchallenge.primitives;
+package org.aicl.raytracerchallenge.primitives.ray;
 
+import org.aicl.raytracerchallenge.primitives.Constant;
 import org.aicl.raytracerchallenge.primitives.shape.Shape;
-import org.aicl.raytracerchallenge.utilities.FloatEquality;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

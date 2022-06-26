@@ -2,6 +2,8 @@ package org.aicl.raytracerchallenge;
 
 import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.primitives.light.PointLight;
+import org.aicl.raytracerchallenge.primitives.ray.Ray;
+import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 import org.aicl.raytracerchallenge.primitives.shape.Shape;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
@@ -21,12 +23,14 @@ public class World {
         this.lights.addAll(lights);
     }
 
-    public RayIntersection intersect(Ray ray){
+    public RayIntersection intersect(Ray ray, boolean sort){
         RayIntersection intersections = new RayIntersection(0, List.of());
         for(int i = 0; i < shapes.size() ; i++){
             RayIntersection spaheIntersect = shapes.get(i).intersect(ray);
             intersections.concat(spaheIntersect);
         }
+        if(sort)
+            intersections.sort();
         return intersections;
     }
 

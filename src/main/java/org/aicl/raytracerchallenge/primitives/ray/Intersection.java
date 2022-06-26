@@ -1,4 +1,4 @@
-package org.aicl.raytracerchallenge.primitives;
+package org.aicl.raytracerchallenge.primitives.ray;
 
 import org.aicl.raytracerchallenge.primitives.shape.Shape;
 import org.aicl.raytracerchallenge.utilities.FloatEquality;

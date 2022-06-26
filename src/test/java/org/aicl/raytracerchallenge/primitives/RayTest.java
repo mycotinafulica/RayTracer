@@ -1,5 +1,7 @@
 package org.aicl.raytracerchallenge.primitives;
 
+import org.aicl.raytracerchallenge.primitives.ray.Ray;
+import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.RayTransformer;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;

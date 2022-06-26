@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.primitives.light.PointLight;
+import org.aicl.raytracerchallenge.primitives.ray.Ray;
+import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
 import org.junit.jupiter.api.Test;
@@ -40,8 +42,8 @@ public class WorldTest {
     public void intersectionRayOnDefaultWorldTest(){
         Ray r   = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
         World w = World.createDefault();
-        RayIntersection intersection = w.intersect(r);
-        intersection.sort();
+        RayIntersection intersection = w.intersect(r, true);
+//        intersection.sort();
         assertEquals(4, intersection.count);
         assertEquals(4, intersection.getTime(0), 0.00001);
         assertEquals(4.5, intersection.getTime(1), 0.00001);

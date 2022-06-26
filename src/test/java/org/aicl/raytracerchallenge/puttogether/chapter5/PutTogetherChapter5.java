@@ -2,6 +2,8 @@ package org.aicl.raytracerchallenge.puttogether.chapter5;
 
 import org.aicl.raytracerchallenge.display.Canvas;
 import org.aicl.raytracerchallenge.primitives.*;
+import org.aicl.raytracerchallenge.primitives.ray.Ray;
+import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,7 @@
 package org.aicl.raytracerchallenge.transformation;
 
 import org.aicl.raytracerchallenge.primitives.*;
+import org.aicl.raytracerchallenge.primitives.ray.Ray;
 
 public class RayTransformer {
     public static Ray transform(Ray ray, Matrix matrix){
