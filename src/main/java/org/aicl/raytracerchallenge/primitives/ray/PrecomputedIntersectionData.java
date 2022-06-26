@@ -6,13 +6,13 @@ import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.shape.Shape;
 
 public class PrecomputedIntersectionData {
-    double time = 0;
-    Shape intersectedObj;
+    public double time = 0;
+    public Shape intersectedObj;
     //intersection point
-    Point point;
-    Vector eyev;
-    Vector normal;
-    boolean inside = false;
+    public Point point;
+    public Vector eyev;
+    public Vector normal;
+    public boolean inside = false;
 
     public PrecomputedIntersectionData compute(Intersection i, Ray ray){
         this.time = i.time;

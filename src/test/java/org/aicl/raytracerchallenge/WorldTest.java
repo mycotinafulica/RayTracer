@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.primitives.light.PointLight;
+import org.aicl.raytracerchallenge.primitives.ray.Intersection;
+import org.aicl.raytracerchallenge.primitives.ray.PrecomputedIntersectionData;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
+import org.aicl.raytracerchallenge.primitives.shape.Shape;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
 import org.junit.jupiter.api.Test;
@@ -49,5 +52,33 @@ public class WorldTest {
         assertEquals(4.5, intersection.getTime(1), 0.00001);
         assertEquals(5.5, intersection.getTime(2), 0.00001);
         assertEquals(6, intersection.getTime(3), 0.00001);
+    }
+
+    @Test
+    public void testShadingIntersection(){
+        World w = World.createDefault();
+        Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        Shape obj1 = w.getObject(0);
+        Intersection i = new Intersection(4.0, obj1);
+        PrecomputedIntersectionData data = new PrecomputedIntersectionData();
+        data.compute(i, ray);
+        Color result = w.shadeHit(data);
+        System.out.println(result.toTuple().toString());
+        Color expected = new Color(0.38066, 0.47583, 0.2855);
+        assertTrue(result.isIdentical(expected));
+    }
+
+    @Test
+    public void testShadingIntersectionFromInside(){
+        World w = World.createDefault();
+        w.setLight(new PointLight(new Point(0, 0.25, 0), new Color(1, 1, 1)), 0);
+        Ray ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
+        Shape obj1 = w.getObject(1);
+        Intersection i = new Intersection(0.5, obj1);
+        PrecomputedIntersectionData data = new PrecomputedIntersectionData();
+        data.compute(i, ray);
+        Color result = w.shadeHit(data);
+        Color expected = new Color(0.90498, 0.90498, 0.90498);
+        assertTrue(result.isIdentical(expected));
     }
 }
