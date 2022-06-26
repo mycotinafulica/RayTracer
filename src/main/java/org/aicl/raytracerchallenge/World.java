@@ -50,6 +50,10 @@ public class World {
         return false;
     }
 
+    public Shape getObject(int index){
+        return shapes.get(index);
+    }
+
     public static World createDefault(){
         PointLight light = new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1));
         Sphere s1  = new Sphere();

@@ -1,5 +1,8 @@
-package org.aicl.raytracerchallenge.primitives;
+package org.aicl.raytracerchallenge.primitives.ray;
 
+import org.aicl.raytracerchallenge.primitives.Matrix;
+import org.aicl.raytracerchallenge.primitives.Point;
+import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
