@@ -158,4 +158,52 @@ public class TransformMatrixGeneratorTest {
         expected = new Point(15, 0, 7);
         assertTrue(expected.isIdentical(chained));
     }
+
+    @Test
+    public void viewTransformCase1(){
+        Point from = new Point(0, 0, 0);
+        Point to = new Point(0, 0, -1);
+        Vector up = new Vector(0, 1, 0);
+        Matrix t = TransformMatrixGenerator.viewTransform(from, to, up);
+        t.print();
+        assertTrue(Matrix.identity().isEqual(t));
+    }
+
+    @Test
+    public void viewTransformCase2(){
+        Point from = new Point(0, 0, 0);
+        Point to = new Point(0, 0, 1);
+        Vector up = new Vector(0, 1, 0);
+        Matrix t = TransformMatrixGenerator.viewTransform(from, to, up);
+        t.print();
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        assertTrue(generator.scale(-1, 1, -1).isEqual(t));
+    }
+
+    @Test
+    public void viewTransformCase3(){
+        Point from = new Point(0, 0, 8);
+        Point to = new Point(0, 0, 0);
+        Vector up = new Vector(0, 1, 0);
+        Matrix t = TransformMatrixGenerator.viewTransform(from, to, up);
+        t.print();
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        assertTrue(generator.translate(0, 0, -8).isEqual(t));
+    }
+
+    @Test
+    public void viewTransformCase4(){
+        Point from = new Point(1, 3, 2);
+        Point to = new Point(4, -2, 8);
+        Vector up = new Vector(1, 1, 0);
+        Matrix t = TransformMatrixGenerator.viewTransform(from, to, up);
+        t.print();
+        Matrix expected = new Matrix(new double[][]{
+                new double[]{-0.50709, 0.50709, 0.67612, -2.36643},
+                new double[]{0.76772, 0.60609, 0.12122, -2.82843},
+                new double[]{-0.35857, 0.59761, -0.71714, 0.00000},
+                new double[]{0.00000, 0.00000, 0.00000, 1.0000}
+        });
+        assertTrue(expected.isEqual(t));
+    }
 }

@@ -1,6 +1,6 @@
 package org.aicl.raytracerchallenge.transformation;
 
-import org.aicl.raytracerchallenge.primitives.Matrix;
+import org.aicl.raytracerchallenge.primitives.*;
 
 public class TransformMatrixGenerator {
     public Matrix translate(double x, double y, double z){
@@ -67,5 +67,20 @@ public class TransformMatrixGenerator {
                         new double[]{0, 0, 0, 1}
                 }
         );
+    }
+
+    public static Matrix viewTransform(Point from, Point to, Vector up){
+        Tuple forward  = to.subtract(from).normalize();
+        Tuple upNormal = up.normalize();
+        Tuple left     = TupleOperation.cross(forward, upNormal);
+        Tuple trueUp   = TupleOperation.cross(left, forward);
+        Matrix orientation = new Matrix(new double[][]{
+                new double[]{left.x, left.y, left.z, 0},
+                new double[]{trueUp.x, trueUp.y, trueUp.z, 0},
+                new double[]{-forward.x, -forward.y, -forward.z, 0},
+                new double[]{0, 0, 0, 1}
+        });
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        return orientation.multiply(generator.translate(-from.x, -from.y, -from.z));
     }
 }
