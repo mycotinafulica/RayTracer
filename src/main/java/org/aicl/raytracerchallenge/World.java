@@ -3,6 +3,7 @@ package org.aicl.raytracerchallenge;
 import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.primitives.light.LightSampler;
 import org.aicl.raytracerchallenge.primitives.light.PointLight;
+import org.aicl.raytracerchallenge.primitives.ray.Intersection;
 import org.aicl.raytracerchallenge.primitives.ray.PrecomputedIntersectionData;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
@@ -55,11 +56,25 @@ public class World {
     public Color shadeHit(PrecomputedIntersectionData data){
         Color color = new Color(0, 0, 0);
         for(int i = 0 ; i < lights.size() ; i++){
-            System.out.println("COmputing");
             color = color.add(LightSampler.lighting(data.intersectedObj.getMaterial(),
                     lights.get(i), data.point, data.eyev, data.normal));
         }
         return color;
+    }
+
+    public Color worldColorAtRay(Ray ray){
+        RayIntersection intersections = new RayIntersection(0, List.of());
+        for(int i = 0 ; i < shapes.size() ; i++){
+            RayIntersection shapeIntersection = shapes.get(i).intersect(ray);
+            intersections.concat(shapeIntersection);
+        }
+        Intersection hit = intersections.hit();
+        if(hit == null)
+            return new Color(0, 0, 0);
+
+        PrecomputedIntersectionData data = new PrecomputedIntersectionData();
+        data.compute(hit, ray);
+        return shadeHit(data);
     }
 
     public Shape getObject(int index){

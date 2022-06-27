@@ -63,7 +63,6 @@ public class WorldTest {
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
         data.compute(i, ray);
         Color result = w.shadeHit(data);
-        System.out.println(result.toTuple().toString());
         Color expected = new Color(0.38066, 0.47583, 0.2855);
         assertTrue(result.isIdentical(expected));
     }
@@ -80,5 +79,36 @@ public class WorldTest {
         Color result = w.shadeHit(data);
         Color expected = new Color(0.90498, 0.90498, 0.90498);
         assertTrue(result.isIdentical(expected));
+    }
+
+    @Test
+    public void testWordColorAtCase1(){
+        World w = World.createDefault();
+        Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 1, 0));
+        Color c = w.worldColorAtRay(ray);
+        Color expected = new Color(0, 0, 0);
+        assertTrue(expected.isIdentical(c));
+    }
+
+    @Test
+    public void testWordColorAtCase2(){
+        World w = World.createDefault();
+        Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        Color c = w.worldColorAtRay(ray);
+        Color expected = new Color(0.38066, 0.47583, 0.2855);
+        assertTrue(expected.isIdentical(c));
+    }
+
+    @Test
+    public void testWordColorAtCase3(){
+        World w = World.createDefault();
+        Shape outer = w.getObject(0);
+        outer.getMaterial().ambient = 1;
+        Shape inner = w.getObject(1);
+        inner.getMaterial().ambient = 1;
+
+        Ray ray = new Ray(new Point(0, 0, 0.75), new Vector(0, 0, -1));
+        Color c = w.worldColorAtRay(ray);
+        assertTrue(inner.getMaterial().color.isIdentical(c));
     }
 }
