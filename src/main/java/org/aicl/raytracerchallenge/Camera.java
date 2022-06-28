@@ -1,9 +1,7 @@
 package org.aicl.raytracerchallenge;
 
-import org.aicl.raytracerchallenge.primitives.Matrix;
-import org.aicl.raytracerchallenge.primitives.Point;
-import org.aicl.raytracerchallenge.primitives.Tuple;
-import org.aicl.raytracerchallenge.primitives.Vector;
+import org.aicl.raytracerchallenge.display.Canvas;
+import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 
 public class Camera {
@@ -50,5 +48,18 @@ public class Camera {
         Vector direction = new Vector(pxLocation.subtract(origin).normalize());
 
         return new Ray(new Point(origin), direction);
+    }
+
+    public Canvas render(World w){
+        Canvas image = new Canvas(hsize, vsize);
+        for(int  y = 0 ; y < vsize ; y++){
+            for(int x = 0 ; x < hsize ; x++){
+                Ray ray = rayForPixel(x, y);
+                Color color = w.worldColorAtRay(ray);
+                image.writePixel(x, y, color);
+            }
+        }
+
+        return image;
     }
 }

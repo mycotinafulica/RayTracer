@@ -2,6 +2,8 @@ package org.aicl.raytracerchallenge;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.aicl.raytracerchallenge.display.Canvas;
+import org.aicl.raytracerchallenge.primitives.Color;
 import org.aicl.raytracerchallenge.primitives.Matrix;
 import org.aicl.raytracerchallenge.primitives.Point;
 import org.aicl.raytracerchallenge.primitives.Vector;
@@ -52,5 +54,17 @@ public class CameraTest {
         Ray r = c.rayForPixel(100, 50);
         assertTrue(r.origin.isIdentical(new Point(0, 2, -5)));
         assertTrue(r.direction.isIdentical(new Vector(Math.sqrt(2)/2.0, 0, -Math.sqrt(2)/2.0)));
+    }
+
+    @Test
+    public void renderTest(){
+        World w  = World.createDefault();
+        Camera c = new Camera(11, 11, Math.PI/2);
+        Point from = new Point(0, 0, -5);
+        Point to = new Point(0, 0, 0);
+        Vector up = new Vector(0, 1, 0);
+        c.transform = TransformMatrixGenerator.viewTransform(from, to, up);
+        Canvas image = c.render(w);
+        assertTrue(image.pixelAt(5, 5).isIdentical(new Color(0.38066, 0.47583, 0.2855)));
     }
 }
