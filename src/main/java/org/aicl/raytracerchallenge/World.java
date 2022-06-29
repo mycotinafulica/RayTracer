@@ -81,6 +81,10 @@ public class World {
         return shapes.get(index);
     }
 
+    public void addObject(Shape obj){
+        this.shapes.add(obj);
+    }
+
     public void addLight(PointLight light){
         lights.add(light);
     }
