@@ -57,7 +57,7 @@ public class World {
         Color color = new Color(0, 0, 0);
         for(int i = 0 ; i < lights.size() ; i++){
             color = color.add(LightSampler.lighting(data.intersectedObj.getMaterial(),
-                    lights.get(i), data.point, data.eyev, data.normal));
+                    lights.get(i), data.point, data.eyev, data.normal, false));
         }
         return color;
     }
@@ -91,6 +91,24 @@ public class World {
 
     public void setLight(PointLight light, int index){
         lights.set(index, light);
+    }
+
+    public boolean isInShadow(Point p){
+        for(int i = 0; i < lights.size() ; i++){
+            Tuple direction = lights.get(i).position.subtract(p);
+            double distance = direction.magnitude();
+            //normalized
+            direction = direction.normalize();
+
+            Ray r = new Ray(p, new Vector(direction));
+            RayIntersection intersections = this.intersect(r, false);
+            
+            Intersection hit = intersections.hit();
+            if(hit == null || hit.time >= distance)
+                return false;
+        }
+
+        return true;
     }
 
     public static World createDefault(){

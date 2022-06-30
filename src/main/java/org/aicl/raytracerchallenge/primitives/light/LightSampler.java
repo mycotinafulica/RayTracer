@@ -3,11 +3,14 @@ package org.aicl.raytracerchallenge.primitives.light;
 import org.aicl.raytracerchallenge.primitives.*;
 
 public class LightSampler {
-    public static Color lighting(Material m, PointLight light, Point point, Vector eyev, Vector normal){
+    public static Color lighting(Material m, PointLight light, Point point, Vector eyev, Vector normal, boolean isInShadow){
         Color effectiveColor = m.color.multiply(light.intensity);
 
         Tuple lightv = light.position.subtract(point).normalize();
         Color ambient = effectiveColor.multiply(m.ambient);
+
+        if(isInShadow)
+            return ambient;
 
         double lightDotNormal = TupleOperation.dot(lightv, normal);
         Color diffuse;

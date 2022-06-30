@@ -111,4 +111,32 @@ public class WorldTest {
         Color c = w.worldColorAtRay(ray);
         assertTrue(inner.getMaterial().color.isIdentical(c));
     }
+
+    @Test
+    public void isInShadowTest1(){
+        World w = World.createDefault();
+        Point p = new Point(0, 10, 0);
+        assertFalse(w.isInShadow(p));
+    }
+
+    @Test
+    public void isInShadowTest2(){
+        World w = World.createDefault();
+        Point p = new Point(10, -10, 10);
+        assertTrue(w.isInShadow(p));
+    }
+
+    @Test
+    public void isInShadowTest3(){
+        World w = World.createDefault();
+        Point p = new Point(-20, 20, -20);
+        assertFalse(w.isInShadow(p));
+    }
+
+    @Test
+    public void isInShadowTest4(){
+        World w = World.createDefault();
+        Point p = new Point(-2, 2, -2);
+        assertFalse(w.isInShadow(p));
+    }
 }
