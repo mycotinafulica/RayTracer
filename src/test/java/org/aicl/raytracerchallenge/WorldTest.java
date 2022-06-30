@@ -139,4 +139,22 @@ public class WorldTest {
         Point p = new Point(-2, 2, -2);
         assertFalse(w.isInShadow(p));
     }
+
+    @Test
+    public void shadeHitGivenIntersection(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        World w = new World();
+        w.addLight(new PointLight(new Point(0, 0, -10), new Color(1, 1, 1)));
+        Sphere s1 = new Sphere();
+        w.addObject(s1);
+        Sphere s2 = new Sphere();
+        s2.setTransform(generator.translate(0, 0, 10));
+        w.addObject(s2);
+        Ray r = new Ray(new Point(0, 0, 5), new Vector(0, 0, 1));
+        Intersection i = new Intersection(4.0, s2);
+        PrecomputedIntersectionData data = new PrecomputedIntersectionData();
+        data.compute(i, r);
+        Color c = w.shadeHit(data);
+        assertTrue(c.isIdentical(new Color(0.1, 0.1, 0.1)));
+    }
 }

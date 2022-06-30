@@ -56,8 +56,9 @@ public class World {
     public Color shadeHit(PrecomputedIntersectionData data){
         Color color = new Color(0, 0, 0);
         for(int i = 0 ; i < lights.size() ; i++){
+            boolean isInShadow = isInShadow(data.overPoint);
             color = color.add(LightSampler.lighting(data.intersectedObj.getMaterial(),
-                    lights.get(i), data.point, data.eyev, data.normal, false));
+                    lights.get(i), data.overPoint, data.eyev, data.normal, isInShadow));
         }
         return color;
     }
@@ -102,7 +103,7 @@ public class World {
 
             Ray r = new Ray(p, new Vector(direction));
             RayIntersection intersections = this.intersect(r, false);
-            
+
             Intersection hit = intersections.hit();
             if(hit == null || hit.time >= distance)
                 return false;
