@@ -21,7 +21,7 @@ public class Sphere extends Shape {
     }
 
     @Override
-    protected RayIntersection localIntersect(Ray transformedRay) {
+    public RayIntersection localIntersect(Ray transformedRay) {
         Tuple sphereToRay = transformedRay.origin.subtract(this.origin);
         //a = D^2, b = 2OD, c = O^2 - R^2 -- R = radius, O = ray origin, D = ray direction
         double a = TupleOperation.dot(transformedRay.direction, transformedRay.direction);
@@ -40,7 +40,7 @@ public class Sphere extends Shape {
     }
 
     @Override
-    protected Tuple localNormal(Tuple objectPoint) {
+    public Tuple localNormal(Tuple objectPoint) {
         return objectPoint.subtract(origin);
     }
 
