@@ -4,7 +4,13 @@ import org.aicl.raytracerchallenge.primitives.*;
 
 public class LightSampler {
     public static Color lighting(Material m, PointLight light, Point point, Vector eyev, Vector normal, boolean isInShadow){
-        Color effectiveColor = m.color.multiply(light.intensity);
+        Color materialColor;
+        if(m.pattern == null )
+            materialColor = m.color;
+        else
+            materialColor = m.pattern.patternAt(point);
+
+        Color effectiveColor = materialColor.multiply(light.intensity);
 
         Tuple lightv = light.position.subtract(point).normalize();
         Color ambient = effectiveColor.multiply(m.ambient);

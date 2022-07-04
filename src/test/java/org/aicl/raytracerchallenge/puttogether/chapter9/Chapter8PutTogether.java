@@ -1,4 +1,4 @@
-package org.aicl.raytracerchallenge.puttogether.chapter8;
+package org.aicl.raytracerchallenge.puttogether.chapter9;
 
 import org.aicl.raytracerchallenge.Camera;
 import org.aicl.raytracerchallenge.World;

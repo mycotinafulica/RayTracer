@@ -1,5 +1,6 @@
 package org.aicl.raytracerchallenge.primitives;
 
+import org.aicl.raytracerchallenge.primitives.pattern.BasePattern;
 import org.aicl.raytracerchallenge.utilities.FloatEquality;
 
 public class Material {
@@ -8,6 +9,8 @@ public class Material {
     public double diffuse   = 0.9;
     public double specular  = 0.9;
     public double shininess = 200.;
+
+    public BasePattern pattern = null;
 
     public boolean isIdentical(Material m){
         return color.isIdentical(m.color)
