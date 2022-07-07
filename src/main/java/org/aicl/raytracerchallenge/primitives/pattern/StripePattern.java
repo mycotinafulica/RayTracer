@@ -2,6 +2,7 @@ package org.aicl.raytracerchallenge.primitives.pattern;
 
 import org.aicl.raytracerchallenge.primitives.Color;
 import org.aicl.raytracerchallenge.primitives.Point;
+import org.aicl.raytracerchallenge.primitives.shape.Shape;
 
 public class StripePattern extends BasePattern {
 
