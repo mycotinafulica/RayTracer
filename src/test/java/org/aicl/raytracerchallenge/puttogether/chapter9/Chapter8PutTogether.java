@@ -8,6 +8,7 @@ import org.aicl.raytracerchallenge.primitives.Material;
 import org.aicl.raytracerchallenge.primitives.Point;
 import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.light.PointLight;
+import org.aicl.raytracerchallenge.primitives.pattern.StripePattern;
 import org.aicl.raytracerchallenge.primitives.shape.Plane;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
@@ -39,8 +40,12 @@ public class Chapter8PutTogether {
         rightWall.setMaterial(floorMaterial);*/
 
         Sphere middle = new Sphere();
-        middle.setTransform(generator.translate(-0.5, 1, 0.5));
-        middle.setMaterial(new Material());
+        middle.setTransform(generator.translate(-0.5, 1, 0.5).multiply(generator.rotateZ(Math.PI)));
+        Material m = new Material();
+
+        m.pattern = new StripePattern(new Color(0.5, 0.5, 1), new Color(0.5, 1, 0));
+        m.pattern.setTransform(generator.scale(0.25, 0.25, 0.25));
+        middle.setMaterial(m);
         middle.getMaterial().color = new Color(0.1, 1, 0.5);
         middle.getMaterial().diffuse = 0.7;
         middle.getMaterial().specular = 0.3;

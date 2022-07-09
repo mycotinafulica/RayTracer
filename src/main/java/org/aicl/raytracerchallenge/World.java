@@ -57,7 +57,7 @@ public class World {
         Color color = new Color(0, 0, 0);
         for(int i = 0 ; i < lights.size() ; i++){
             boolean isInShadow = isInShadow(data.overPoint);
-            color = color.add(LightSampler.lighting(data.intersectedObj.getMaterial(),
+            color = color.add(LightSampler.lighting(data.intersectedObj.getMaterial(), data.intersectedObj,
                     lights.get(i), data.overPoint, data.eyev, data.normal, isInShadow));
         }
         return color;

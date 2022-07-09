@@ -1,14 +1,15 @@
 package org.aicl.raytracerchallenge.primitives.light;
 
 import org.aicl.raytracerchallenge.primitives.*;
+import org.aicl.raytracerchallenge.primitives.shape.Shape;
 
 public class LightSampler {
-    public static Color lighting(Material m, PointLight light, Point point, Vector eyev, Vector normal, boolean isInShadow){
+    public static Color lighting(Material m, Shape object, PointLight light, Point point, Vector eyev, Vector normal, boolean isInShadow){
         Color materialColor;
         if(m.pattern == null )
             materialColor = m.color;
         else
-            materialColor = m.pattern.patternAt(point);
+            materialColor = m.pattern.patternAtObject(object, point);
 
         Color effectiveColor = materialColor.multiply(light.intensity);
 

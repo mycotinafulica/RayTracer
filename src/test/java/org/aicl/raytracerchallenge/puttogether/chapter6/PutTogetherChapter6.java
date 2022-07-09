@@ -42,7 +42,8 @@ public class PutTogetherChapter6 {
                     System.out.println("direction :" + direction.toString());
                     System.out.println("normal :" + normal.toString());
                     Vector eyev      = new Vector(direction.normalize().negates()); //new Vector(new Vector(10, 10, -10).normalize()); //specular would be when the light -- eye -- spehere in one straight line
-                    Color color      = LightSampler.lighting(xs.hit().intersectedShape.getMaterial(), light, new Point(pointAtHit), eyev, normal, false);
+                    Color color      = LightSampler.lighting(xs.hit().intersectedShape.getMaterial(), xs.hit().intersectedShape,
+                            light, new Point(pointAtHit), eyev, normal, false);
                     c.writePixel(x, y, color);
                 }
             }

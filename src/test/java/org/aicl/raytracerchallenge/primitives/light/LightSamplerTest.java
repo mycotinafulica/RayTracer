@@ -5,6 +5,8 @@ import org.aicl.raytracerchallenge.primitives.Material;
 import org.aicl.raytracerchallenge.primitives.Point;
 import org.aicl.raytracerchallenge.primitives.Vector;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +27,7 @@ public class LightSamplerTest {
         Vector normal = new Vector(0, 0, -1);
         PointLight light = new PointLight(new Point(0, 0, -10), new Color(1, 1, 1));
 
-        Color result = LightSampler.lighting(m, light, position, eyev, normal, false);
+        Color result = LightSampler.lighting(m, new Sphere(), light, position, eyev, normal, false);
         assertTrue(result.isIdentical(new Color(1.9, 1.9, 1.9)));
     }
 
@@ -35,7 +37,7 @@ public class LightSamplerTest {
         Vector normal = new Vector(0, 0, -1);
         PointLight light = new PointLight(new Point(0, 0, -10), new Color(1, 1, 1));
 
-        Color result = LightSampler.lighting(m, light, position, eyev, normal, false);
+        Color result = LightSampler.lighting(m, new Sphere(), light, position, eyev, normal, false);
         assertTrue(result.isIdentical(new Color(1.0, 1.0, 1.0)));
     }
 
@@ -45,7 +47,7 @@ public class LightSamplerTest {
         Vector normal = new Vector(0, 0, -1);
         PointLight light = new PointLight(new Point(0, 10, -10), new Color(1, 1, 1));
 
-        Color result = LightSampler.lighting(m, light, position, eyev, normal, false);
+        Color result = LightSampler.lighting(m, new Sphere(), light, position, eyev, normal, false);
         assertTrue(result.isIdentical(new Color(0.7364, 0.7364, 0.7364)));
     }
 
@@ -55,7 +57,7 @@ public class LightSamplerTest {
         Vector normal = new Vector(0, 0, -1);
         PointLight light = new PointLight(new Point(0, 10, -10), new Color(1, 1, 1));
 
-        Color result = LightSampler.lighting(m, light, position, eyev, normal, false);
+        Color result = LightSampler.lighting(m, new Sphere(), light, position, eyev, normal, false);
         assertTrue(result.isIdentical(new Color(1.6364, 1.6364, 1.6364)));
     }
 
@@ -65,7 +67,7 @@ public class LightSamplerTest {
         Vector normal = new Vector(0, 0, -1);
         PointLight light = new PointLight(new Point(0, 10, 10), new Color(1, 1, 1));
 
-        Color result = LightSampler.lighting(m, light, position, eyev, normal, false);
+        Color result = LightSampler.lighting(m, new Sphere(), light, position, eyev, normal, false);
         assertTrue(result.isIdentical(new Color(0.1, 0.1, 0.1)));
     }
 
@@ -74,7 +76,7 @@ public class LightSamplerTest {
         Vector eyev = new Vector(0, 0, -1);
         Vector normal = new Vector(0, 0, -1);
         PointLight light = new PointLight(new Point(0, 0, -10), new Color(1, 1, 1));
-        Color result = LightSampler.lighting(m, light, position, eyev, normal, true);
+        Color result = LightSampler.lighting(m, new Sphere(), light, position, eyev, normal, true);
         assertTrue(result.isIdentical(new Color(0.1, 0.1, 0.1)));
     }
 }
