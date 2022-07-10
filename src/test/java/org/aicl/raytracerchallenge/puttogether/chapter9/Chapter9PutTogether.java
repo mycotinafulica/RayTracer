@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-public class Chapter8PutTogether {
+public class Chapter9PutTogether {
     @Test
     public void letsPutTogether() throws IOException {
         TransformMatrixGenerator generator = new TransformMatrixGenerator();
