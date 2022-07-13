@@ -10,6 +10,8 @@ public class Material {
     public double specular  = 0.9;
     public double shininess = 200.;
 
+    public double reflective = 0.0;
+
     public BasePattern pattern = null;
 
     public boolean isIdentical(Material m){

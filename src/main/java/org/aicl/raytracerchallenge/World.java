@@ -10,6 +10,7 @@ import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 import org.aicl.raytracerchallenge.primitives.shape.Shape;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
+import org.aicl.raytracerchallenge.utilities.FloatEquality;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,6 +111,17 @@ public class World {
         }
 
         return true;
+    }
+
+    public Color reflectedColor(PrecomputedIntersectionData data){
+        if(FloatEquality.isEqual(data.intersectedObj.getMaterial().reflective, 0)){
+            return new Color(0, 0, 0);
+        }
+
+        Ray reflectedRay = new Ray(data.overPoint, data.reflectv);
+        Color colorAt = worldColorAtRay(reflectedRay); //get the color made by intersection of the reflected ray
+
+        return colorAt.multiply(data.intersectedObj.getMaterial().reflective); // multiply with how reflective the material is
     }
 
     public static World createDefault(){

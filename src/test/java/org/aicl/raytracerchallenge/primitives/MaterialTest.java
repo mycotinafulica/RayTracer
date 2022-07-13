@@ -17,6 +17,7 @@ public class MaterialTest {
         assertEquals(0.9, m.diffuse, 0.00001);
         assertEquals(0.9, m.specular, 0.00001);
         assertEquals(200, m.shininess, 0.00001);
+        assertEquals(0, m.reflective, 0.00001);
     }
 
     @Test

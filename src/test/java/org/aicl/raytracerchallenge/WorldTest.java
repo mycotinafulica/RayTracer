@@ -8,6 +8,7 @@ import org.aicl.raytracerchallenge.primitives.ray.Intersection;
 import org.aicl.raytracerchallenge.primitives.ray.PrecomputedIntersectionData;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
+import org.aicl.raytracerchallenge.primitives.shape.Plane;
 import org.aicl.raytracerchallenge.primitives.shape.Shape;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
@@ -156,5 +157,34 @@ public class WorldTest {
         data.compute(i, r);
         Color c = w.shadeHit(data);
         assertTrue(c.isIdentical(new Color(0.1, 0.1, 0.1)));
+    }
+
+    @Test
+    public void testNonReflectiveObject(){
+        World w = World.createDefault();
+        Ray ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
+        Shape shape = w.getObject(1);
+        shape.getMaterial().ambient = 1;
+        Intersection i = new Intersection(1., shape);
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(i, ray);
+        assertTrue(new Color(0, 0, 0).isIdentical(w.reflectedColor(comps)));
+    }
+
+    @Test
+    public void testReflectiveObject(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        World w = World.createDefault();
+        Shape shape = new Plane();
+        shape.getMaterial().reflective = 0.5;
+        shape.setTransform(generator.translate(0, -1, 0));
+
+        w.addObject(shape);
+        Ray ray = new Ray(new Point(0, 0, -3), new Vector(0, -Math.sqrt(2)/2.0, Math.sqrt(2)/2.0));
+        Intersection i = new Intersection(Math.sqrt(2), shape);
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(i, ray);
+        Color color = w.reflectedColor(comps);
+        assertTrue(new Color(0.19033, 0.23791, 0.14274).isIdentical(color));
     }
 }

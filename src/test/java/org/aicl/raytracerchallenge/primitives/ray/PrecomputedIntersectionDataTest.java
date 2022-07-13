@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.aicl.raytracerchallenge.primitives.Constant;
 import org.aicl.raytracerchallenge.primitives.Point;
 import org.aicl.raytracerchallenge.primitives.Vector;
+import org.aicl.raytracerchallenge.primitives.shape.Plane;
 import org.aicl.raytracerchallenge.primitives.shape.Shape;
 import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
@@ -60,5 +61,16 @@ public class PrecomputedIntersectionDataTest {
         data.compute(i, ray);
         assertTrue(data.overPoint.z < -Constant.epsilon/2.0);
         assertTrue(data.point.z > data.overPoint.z);
+    }
+
+    @Test
+    public void testReflectVector(){
+        Shape shape = new Plane();
+        Ray ray = new Ray(new Point(0, 1, -1), new Vector(0, -Math.sqrt(2.0)/2.0, Math.sqrt(2.0)/2.0));
+        Intersection i = new Intersection(Math.sqrt(2), shape);
+        Vector expected = new Vector(0, Math.sqrt(2.0)/2.0, Math.sqrt(2.0)/2.0);
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(i, ray);
+        assertTrue(expected.isIdentical(comps.reflectv));
     }
 }

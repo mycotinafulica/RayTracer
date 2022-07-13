@@ -13,6 +13,8 @@ public class PrecomputedIntersectionData {
     public Point point;
     public Vector eyev;
     public Vector normal;
+
+    public Vector reflectv;
     public boolean inside = false;
 
     public Point overPoint;
@@ -31,6 +33,7 @@ public class PrecomputedIntersectionData {
             normal = new Vector(normal.negates());
         }
 
+        reflectv = TupleOperation.reflect(ray.direction, normal);
         overPoint = new Point(point.add(normal.multiply(Constant.epsilon)));
 
         return this;
