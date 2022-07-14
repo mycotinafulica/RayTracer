@@ -55,7 +55,7 @@ public class Camera {
         for(int  y = 0 ; y < vsize ; y++){
             for(int x = 0 ; x < hsize ; x++){
                 Ray ray = rayForPixel(x, y);
-                Color color = w.worldColorAtRay(ray);
+                Color color = w.worldColorAtRay(ray, 0);
                 image.writePixel(x, y, color);
             }
         }

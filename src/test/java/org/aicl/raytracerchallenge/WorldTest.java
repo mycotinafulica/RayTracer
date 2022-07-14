@@ -63,7 +63,7 @@ public class WorldTest {
         Intersection i = new Intersection(4.0, obj1);
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
         data.compute(i, ray);
-        Color result = w.shadeHit(data);
+        Color result = w.shadeHit(data, 0);
         Color expected = new Color(0.38066, 0.47583, 0.2855);
         assertTrue(result.isIdentical(expected));
     }
@@ -77,7 +77,7 @@ public class WorldTest {
         Intersection i = new Intersection(0.5, obj1);
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
         data.compute(i, ray);
-        Color result = w.shadeHit(data);
+        Color result = w.shadeHit(data,0);
         Color expected = new Color(0.90498, 0.90498, 0.90498);
         assertTrue(result.isIdentical(expected));
     }
@@ -86,7 +86,7 @@ public class WorldTest {
     public void testWordColorAtCase1(){
         World w = World.createDefault();
         Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 1, 0));
-        Color c = w.worldColorAtRay(ray);
+        Color c = w.worldColorAtRay(ray, 0);
         Color expected = new Color(0, 0, 0);
         assertTrue(expected.isIdentical(c));
     }
@@ -95,7 +95,7 @@ public class WorldTest {
     public void testWordColorAtCase2(){
         World w = World.createDefault();
         Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
-        Color c = w.worldColorAtRay(ray);
+        Color c = w.worldColorAtRay(ray, 0);
         Color expected = new Color(0.38066, 0.47583, 0.2855);
         assertTrue(expected.isIdentical(c));
     }
@@ -109,7 +109,7 @@ public class WorldTest {
         inner.getMaterial().ambient = 1;
 
         Ray ray = new Ray(new Point(0, 0, 0.75), new Vector(0, 0, -1));
-        Color c = w.worldColorAtRay(ray);
+        Color c = w.worldColorAtRay(ray, 0);
         assertTrue(inner.getMaterial().color.isIdentical(c));
     }
 
@@ -155,7 +155,7 @@ public class WorldTest {
         Intersection i = new Intersection(4.0, s2);
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
         data.compute(i, r);
-        Color c = w.shadeHit(data);
+        Color c = w.shadeHit(data, 0);
         assertTrue(c.isIdentical(new Color(0.1, 0.1, 0.1)));
     }
 
@@ -168,7 +168,7 @@ public class WorldTest {
         Intersection i = new Intersection(1., shape);
         PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
         comps.compute(i, ray);
-        assertTrue(new Color(0, 0, 0).isIdentical(w.reflectedColor(comps)));
+        assertTrue(new Color(0, 0, 0).isIdentical(w.reflectedColor(comps, 5)));
     }
 
     @Test
@@ -184,7 +184,60 @@ public class WorldTest {
         Intersection i = new Intersection(Math.sqrt(2), shape);
         PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
         comps.compute(i, ray);
-        Color color = w.reflectedColor(comps);
+        Color color = w.reflectedColor(comps, 5);
         assertTrue(new Color(0.19033, 0.23791, 0.14274).isIdentical(color));
+    }
+
+    @Test
+    public void shadeHitWithReflectiveObject(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        World w = World.createDefault();
+        Shape shape = new Plane();
+        shape.getMaterial().reflective = 0.5;
+        shape.setTransform(generator.translate(0, -1, 0));
+
+        Ray ray = new Ray(new Point(0, 0, -3), new Vector(0, -Math.sqrt(2)/2.0, Math.sqrt(2)/2.0));
+        Intersection i = new Intersection(Math.sqrt(2), shape);
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(i, ray);
+        Color color = w.shadeHit(comps, 5);
+        assertTrue(new Color(0.87675, 0.92434, 0.82918).isIdentical(color));
+    }
+
+    @Test
+    public void infiniteBounces(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        World w = new World();
+        w.addLight(new PointLight(new Point(0, 0, 0), new Color(1, 1, 1)));
+        Shape lowerPlane = new Plane();
+        lowerPlane.getMaterial().reflective = 1;
+        lowerPlane.setTransform(generator.translate(0, -1, 0));
+
+        Shape upperPlane = new Plane();
+        upperPlane.getMaterial().reflective = 1;
+        upperPlane.setTransform(generator.translate(0, 1, 0));
+
+        w.addObject(lowerPlane);
+        w.addObject(upperPlane);
+
+        Ray ray = new Ray(new Point(0, 0, 0), new Vector(0, 1, 0));
+        w.worldColorAtRay(ray, 5);
+    }
+
+    @Test
+    public void testReflectiveObjectButRemainingZero(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        World w = World.createDefault();
+        Shape shape = new Plane();
+        shape.getMaterial().reflective = 0.5;
+        shape.setTransform(generator.translate(0, -1, 0));
+
+        w.addObject(shape);
+        Ray ray = new Ray(new Point(0, 0, -3), new Vector(0, -Math.sqrt(2)/2.0, Math.sqrt(2)/2.0));
+        Intersection i = new Intersection(Math.sqrt(2), shape);
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(i, ray);
+        Color color = w.reflectedColor(comps, 0);
+        assertTrue(new Color(0, 0, 0).isIdentical(color));
     }
 }

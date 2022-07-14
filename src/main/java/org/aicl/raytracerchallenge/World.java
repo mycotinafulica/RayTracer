@@ -54,17 +54,18 @@ public class World {
         return false;
     }
 
-    public Color shadeHit(PrecomputedIntersectionData data){
-        Color color = new Color(0, 0, 0);
+    public Color shadeHit(PrecomputedIntersectionData data, int remaining){
+        Color surfaceColor = new Color(0, 0, 0);
         for(int i = 0 ; i < lights.size() ; i++){
             boolean isInShadow = isInShadow(data.overPoint);
-            color = color.add(LightSampler.lighting(data.intersectedObj.getMaterial(), data.intersectedObj,
+            surfaceColor = surfaceColor.add(LightSampler.lighting(data.intersectedObj.getMaterial(), data.intersectedObj,
                     lights.get(i), data.overPoint, data.eyev, data.normal, isInShadow));
         }
-        return color;
+        Color reflectedColor = reflectedColor(data, remaining);
+        return surfaceColor.add(reflectedColor);
     }
 
-    public Color worldColorAtRay(Ray ray){
+    public Color worldColorAtRay(Ray ray, int remaining){
         RayIntersection intersections = new RayIntersection(0, List.of());
         for(int i = 0 ; i < shapes.size() ; i++){
             RayIntersection shapeIntersection = shapes.get(i).intersect(ray);
@@ -76,7 +77,7 @@ public class World {
 
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
         data.compute(hit, ray);
-        return shadeHit(data);
+        return shadeHit(data, remaining);
     }
 
     public Shape getObject(int index){
@@ -113,13 +114,15 @@ public class World {
         return true;
     }
 
-    public Color reflectedColor(PrecomputedIntersectionData data){
+    public Color reflectedColor(PrecomputedIntersectionData data, int remaining){
         if(FloatEquality.isEqual(data.intersectedObj.getMaterial().reflective, 0)){
             return new Color(0, 0, 0);
         }
+        if(remaining <= 0)
+            return new Color(0, 0, 0);
 
         Ray reflectedRay = new Ray(data.overPoint, data.reflectv);
-        Color colorAt = worldColorAtRay(reflectedRay); //get the color made by intersection of the reflected ray
+        Color colorAt = worldColorAtRay(reflectedRay, remaining - 1); //get the color made by intersection of the reflected ray
 
         return colorAt.multiply(data.intersectedObj.getMaterial().reflective); // multiply with how reflective the material is
     }
