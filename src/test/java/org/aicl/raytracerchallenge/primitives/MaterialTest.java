@@ -35,4 +35,11 @@ public class MaterialTest {
         assertTrue(c1.isIdentical(new Color(1, 1, 1)));
         assertTrue(c2.isIdentical(new Color(0, 0, 0)));
     }
+
+    @Test
+    public void testDefaultRefractionAttributesValue(){
+        Material m = new Material();
+        assertEquals(0.0, m.transparency, 0.00001);
+        assertEquals(1.0, m.refractiveIndex, 0.00001);
+    }
 }

@@ -70,5 +70,12 @@ public class Sphere extends Shape {
     public String getId() {
         return id;
     }
+
+    public static Sphere createGlassSphere(){
+        Sphere sphere = new Sphere();
+        sphere.getMaterial().transparency = 1.0;
+        sphere.getMaterial().refractiveIndex = 1.5;
+        return sphere;
+    }
 }
 

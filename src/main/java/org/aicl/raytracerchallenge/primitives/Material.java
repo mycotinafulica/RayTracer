@@ -12,6 +12,10 @@ public class Material {
 
     public double reflective = 0.0;
 
+    public double transparency = 0.;
+
+    public double refractiveIndex = 1.0;
+
     public BasePattern pattern = null;
 
     public boolean isIdentical(Material m){

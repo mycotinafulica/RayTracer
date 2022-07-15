@@ -158,4 +158,12 @@ public class SphereTest {
         sphere.setMaterial(m);
         assertTrue(sphere.getMaterial().isIdentical(m));
     }
+
+    @Test
+    public void glassSphereTest(){
+        Sphere sphere = Sphere.createGlassSphere();
+        assertTrue(sphere.getTransform().isEqual(Matrix.identity()));
+        assertEquals(1.0, sphere.getMaterial().transparency, 0.00001);
+        assertEquals(1.5, sphere.getMaterial().refractiveIndex, 0.00001);
+    }
 }
