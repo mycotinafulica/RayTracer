@@ -46,4 +46,13 @@ public abstract class Shape {
     public abstract boolean isSame(Shape input);
     public abstract boolean isSameCharacteristics(Shape shape);
     public abstract String getId();
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Shape){
+            return isSame((Shape) obj);
+        }
+
+        return false;
+    }
 }

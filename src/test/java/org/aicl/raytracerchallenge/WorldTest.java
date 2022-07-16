@@ -14,6 +14,8 @@ import org.aicl.raytracerchallenge.primitives.shape.Sphere;
 import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class WorldTest {
     @Test
     public void testEmptyWorld(){
@@ -46,7 +48,7 @@ public class WorldTest {
     public void intersectionRayOnDefaultWorldTest(){
         Ray r   = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
         World w = World.createDefault();
-        RayIntersection intersection = w.intersect(r, true);
+        RayIntersection intersection = w.intersect(r);
 //        intersection.sort();
         assertEquals(4, intersection.count);
         assertEquals(4, intersection.getTime(0), 0.00001);
@@ -62,7 +64,7 @@ public class WorldTest {
         Shape obj1 = w.getObject(0);
         Intersection i = new Intersection(4.0, obj1);
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
-        data.compute(i, ray);
+        data.compute(i, ray, new RayIntersection(0, List.of()));
         Color result = w.shadeHit(data, 0);
         Color expected = new Color(0.38066, 0.47583, 0.2855);
         assertTrue(result.isIdentical(expected));
@@ -76,7 +78,7 @@ public class WorldTest {
         Shape obj1 = w.getObject(1);
         Intersection i = new Intersection(0.5, obj1);
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
-        data.compute(i, ray);
+        data.compute(i, ray, new RayIntersection(0, List.of()));
         Color result = w.shadeHit(data,0);
         Color expected = new Color(0.90498, 0.90498, 0.90498);
         assertTrue(result.isIdentical(expected));
@@ -154,7 +156,7 @@ public class WorldTest {
         Ray r = new Ray(new Point(0, 0, 5), new Vector(0, 0, 1));
         Intersection i = new Intersection(4.0, s2);
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
-        data.compute(i, r);
+        data.compute(i, r, new RayIntersection(0, List.of()));
         Color c = w.shadeHit(data, 0);
         assertTrue(c.isIdentical(new Color(0.1, 0.1, 0.1)));
     }
@@ -167,7 +169,7 @@ public class WorldTest {
         shape.getMaterial().ambient = 1;
         Intersection i = new Intersection(1., shape);
         PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
-        comps.compute(i, ray);
+        comps.compute(i, ray, new RayIntersection(0, List.of()));
         assertTrue(new Color(0, 0, 0).isIdentical(w.reflectedColor(comps, 5)));
     }
 
@@ -183,7 +185,7 @@ public class WorldTest {
         Ray ray = new Ray(new Point(0, 0, -3), new Vector(0, -Math.sqrt(2)/2.0, Math.sqrt(2)/2.0));
         Intersection i = new Intersection(Math.sqrt(2), shape);
         PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
-        comps.compute(i, ray);
+        comps.compute(i, ray, new RayIntersection(0, List.of()));
         Color color = w.reflectedColor(comps, 5);
         assertTrue(new Color(0.19033, 0.23791, 0.14274).isIdentical(color));
     }
@@ -199,7 +201,7 @@ public class WorldTest {
         Ray ray = new Ray(new Point(0, 0, -3), new Vector(0, -Math.sqrt(2)/2.0, Math.sqrt(2)/2.0));
         Intersection i = new Intersection(Math.sqrt(2), shape);
         PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
-        comps.compute(i, ray);
+        comps.compute(i, ray, new RayIntersection(0, List.of()));
         Color color = w.shadeHit(comps, 5);
         assertTrue(new Color(0.87675, 0.92434, 0.82918).isIdentical(color));
     }
@@ -236,7 +238,7 @@ public class WorldTest {
         Ray ray = new Ray(new Point(0, 0, -3), new Vector(0, -Math.sqrt(2)/2.0, Math.sqrt(2)/2.0));
         Intersection i = new Intersection(Math.sqrt(2), shape);
         PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
-        comps.compute(i, ray);
+        comps.compute(i, ray, new RayIntersection(0, List.of()));
         Color color = w.reflectedColor(comps, 0);
         assertTrue(new Color(0, 0, 0).isIdentical(color));
     }

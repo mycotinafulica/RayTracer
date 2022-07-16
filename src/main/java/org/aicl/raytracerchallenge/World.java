@@ -27,14 +27,14 @@ public class World {
         this.lights.addAll(lights);
     }
 
-    public RayIntersection intersect(Ray ray, boolean sort){
+    public RayIntersection intersect(Ray ray){
         RayIntersection intersections = new RayIntersection(0, List.of());
         for(int i = 0; i < shapes.size() ; i++){
             RayIntersection spaheIntersect = shapes.get(i).intersect(ray);
             intersections.concat(spaheIntersect);
         }
-        if(sort)
-            intersections.sort();
+
+        intersections.sort();
         return intersections;
     }
 
@@ -76,7 +76,7 @@ public class World {
             return new Color(0, 0, 0);
 
         PrecomputedIntersectionData data = new PrecomputedIntersectionData();
-        data.compute(hit, ray);
+        data.compute(hit, ray, new RayIntersection(0, List.of()));
         return shadeHit(data, remaining);
     }
 
@@ -104,7 +104,7 @@ public class World {
             direction = direction.normalize();
 
             Ray r = new Ray(p, new Vector(direction));
-            RayIntersection intersections = this.intersect(r, false);
+            RayIntersection intersections = this.intersect(r);
 
             Intersection hit = intersections.hit();
             if(hit == null || hit.time >= distance)

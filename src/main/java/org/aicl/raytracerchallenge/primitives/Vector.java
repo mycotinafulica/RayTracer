@@ -10,7 +10,7 @@ public class Vector extends Tuple{
     public Vector(Tuple p){
         super(p);
         if(!FloatEquality.isEqual(p.w, 0)){
-            throw new IllegalArgumentException("Unexpected w value for Vector");
+            throw new IllegalArgumentException("Unexpected w value for Vector : " + p.w);
         }
     }
 }
