@@ -242,4 +242,21 @@ public class WorldTest {
         Color color = w.reflectedColor(comps, 0);
         assertTrue(new Color(0, 0, 0).isIdentical(color));
     }
+
+    @Test
+    public void refractedColorOnOpaqueSurface(){
+        World w = World.createDefault();
+        Shape obj = w.getObject(0);
+        Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        RayIntersection intersections = new RayIntersection(2,
+                List.of(
+                        new Intersection(4., obj),
+                        new Intersection(6., obj)
+                ));
+
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(intersections.getIntersection(0), ray, intersections);
+        Color c = w.refractedColor(comps, 5);
+        assertTrue(new Color(0, 0,0).isIdentical(c));
+    }
 }

@@ -127,6 +127,14 @@ public class World {
         return colorAt.multiply(data.intersectedObj.getMaterial().reflective); // multiply with how reflective the material is
     }
 
+    public Color refractedColor(PrecomputedIntersectionData data, int remaining){
+        if(FloatEquality.isEqual(data.intersectedObj.getMaterial().transparency, 0)){
+            return new Color(0, 0, 0);
+        }
+
+        return new Color(1, 1, 1);
+    }
+
     public static World createDefault(){
         PointLight light = new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1));
         Sphere s1  = new Sphere();

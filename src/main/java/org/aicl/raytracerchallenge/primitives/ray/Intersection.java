@@ -8,7 +8,7 @@ public class Intersection implements Comparable<Intersection>{
     public double time;
     public Shape intersectedShape;
 
-    public Intersection(Double time, Shape shape) {
+    public Intersection(double time, Shape shape) {
         this.time = time;
         this.intersectedShape = shape;
     }
