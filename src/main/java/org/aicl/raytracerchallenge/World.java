@@ -128,7 +128,8 @@ public class World {
     }
 
     public Color refractedColor(PrecomputedIntersectionData data, int remaining){
-        if(FloatEquality.isEqual(data.intersectedObj.getMaterial().transparency, 0)){
+        if(FloatEquality.isEqual(data.intersectedObj.getMaterial().transparency, 0)
+            || remaining == 0){
             return new Color(0, 0, 0);
         }
 

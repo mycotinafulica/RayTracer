@@ -259,4 +259,23 @@ public class WorldTest {
         Color c = w.refractedColor(comps, 5);
         assertTrue(new Color(0, 0,0).isIdentical(c));
     }
+
+    @Test
+    public void refractedColorAtMaxDepthTest(){
+        World w = World.createDefault();
+        Shape obj = w.getObject(0);
+        obj.getMaterial().transparency = 1.0;
+        obj.getMaterial().refractiveIndex = 1.5;
+        Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        RayIntersection intersections = new RayIntersection(2,
+                List.of(
+                        new Intersection(4., obj),
+                        new Intersection(6., obj)
+                ));
+
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(intersections.getIntersection(0), ray, intersections);
+        Color c = w.refractedColor(comps, 0);
+        assertTrue(new Color(0, 0,0).isIdentical(c));
+    }
 }
