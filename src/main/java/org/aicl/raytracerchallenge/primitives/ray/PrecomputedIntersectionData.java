@@ -15,7 +15,6 @@ public class PrecomputedIntersectionData {
     public Point point;
     public Vector eyev;
     public Vector normal;
-
     public Vector reflectv;
     public boolean inside = false;
 
@@ -23,6 +22,7 @@ public class PrecomputedIntersectionData {
     double n2 = 1.0;
 
     public Point overPoint;
+    public Point underPoint;
 
     public PrecomputedIntersectionData compute(Intersection hit, Ray ray, RayIntersection intersections){
         this.time = hit.time;
@@ -40,6 +40,7 @@ public class PrecomputedIntersectionData {
 
         reflectv = TupleOperation.reflect(ray.direction, normal);
         overPoint = new Point(point.add(normal.multiply(Constant.epsilon)));
+        underPoint = new Point(point.subtract(normal.multiply(Constant.epsilon)));
 
         ArrayList<Shape> objectsContainer = new ArrayList<>();
 

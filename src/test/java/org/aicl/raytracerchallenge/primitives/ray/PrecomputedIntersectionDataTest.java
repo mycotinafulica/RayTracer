@@ -110,4 +110,18 @@ public class PrecomputedIntersectionDataTest {
             assertEquals(expectedN2.get((i)), comps.n2, 0.00001);
         }
     }
+
+    @Test
+    public void underPointComputationTest(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        Shape sphere = Sphere.createGlassSphere();
+        sphere.setTransform(generator.translate(0, 0, 1));
+        Intersection intersection = new Intersection(5., sphere);
+        RayIntersection intersections = new RayIntersection(1, List.of(intersection));
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(intersection, ray, intersections);
+        assertTrue(comps.underPoint.z > Constant.epsilon/2);
+        assertTrue(comps.point.z < comps.underPoint.z);
+    }
 }
