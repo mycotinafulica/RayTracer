@@ -18,8 +18,8 @@ public class PrecomputedIntersectionData {
     public Vector reflectv;
     public boolean inside = false;
 
-    double n1 = 1.0;
-    double n2 = 1.0;
+    public double n1 = 1.0;
+    public double n2 = 1.0;
 
     public Point overPoint;
     public Point underPoint;

@@ -133,6 +133,14 @@ public class World {
             return new Color(0, 0, 0);
         }
 
+        double nRatio = data.n1/data.n2;
+        //since both are unit vectors
+        double cosi = TupleOperation.dot(data.eyev, data.normal);
+        //sin^2t + cos^2t = 1
+        double sin2t = (nRatio*nRatio) * (1 - cosi*cosi);
+        if(sin2t > 1)
+            return new Color(0, 0, 0);
+
         return new Color(1, 1, 1);
     }
 

@@ -278,4 +278,23 @@ public class WorldTest {
         Color c = w.refractedColor(comps, 0);
         assertTrue(new Color(0, 0,0).isIdentical(c));
     }
+
+    @Test
+    public void totalInternalReflectionTest(){
+        World w = World.createDefault();
+        Shape shape = w.getObject(0);
+        shape.getMaterial().transparency = 1.0;
+        shape.getMaterial().refractiveIndex = 1.5;
+
+        Ray ray = new Ray(new Point(0, 0, Math.sqrt(2)/2.0), new Vector(0, 1, 0));
+        RayIntersection intersections = new RayIntersection(2,
+                List.of(
+                        new Intersection(-Math.sqrt(2)/2.0, shape),
+                        new Intersection(Math.sqrt(2)/2.0, shape)
+                ));
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(intersections.hit(), ray, intersections);
+        Color c = w.refractedColor(comps, 5);
+        assertTrue(new Color(0, 0, 0).isIdentical(c));
+    }
 }
