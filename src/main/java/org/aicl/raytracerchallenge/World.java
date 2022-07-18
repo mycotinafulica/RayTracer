@@ -62,7 +62,8 @@ public class World {
                     lights.get(i), data.overPoint, data.eyev, data.normal, isInShadow));
         }
         Color reflectedColor = reflectedColor(data, remaining);
-        return surfaceColor.add(reflectedColor);
+        Color refractedColor = refractedColor(data, remaining);
+        return surfaceColor.add(reflectedColor).add(refractedColor);
     }
 
     public Color worldColorAtRay(Ray ray, int remaining){

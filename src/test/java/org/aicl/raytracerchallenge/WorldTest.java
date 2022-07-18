@@ -324,4 +324,28 @@ public class WorldTest {
         Color c = w.refractedColor(comps, 5);
         assertTrue(c.isIdentical(new Color(0, 0.99888, 0.04721)));
     }
+
+    @Test
+    public void shadeHitOnRefractionTest() {
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        World w = World.createDefault();
+        Shape floor = new Plane();
+        floor.setTransform(generator.translate(0, -1, 0));
+        floor.getMaterial().transparency = 0.5;
+        floor.getMaterial().refractiveIndex = 1.5;
+        w.addObject(floor);
+
+        Shape ball = new Sphere();
+        ball.getMaterial().color = new Color(1, 0, 0);
+        ball.getMaterial().ambient = 0.5;
+        ball.setTransform(generator.translate(0, -3.5, -0.5));
+        w.addObject(ball);
+
+        Ray ray = new Ray(new Point(0, 0, -3), new Vector(0, -Math.sqrt(2.0)/2.0, Math.sqrt(2.0)/2.0));
+        RayIntersection intersections = new RayIntersection(1, List.of(new Intersection(Math.sqrt(2.0), floor)));
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(intersections.hit(), ray, intersections);
+        Color c = w.shadeHit(comps,5);
+        assertTrue(c.isIdentical(new Color(0.93642, 0.68642, 0.68642)));
+    }
 }
