@@ -1,5 +1,6 @@
 package org.aicl.raytracerchallenge;
 
+import org.aicl.raytracerchallenge.computation.FresnelEffect;
 import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.primitives.light.LightSampler;
 import org.aicl.raytracerchallenge.primitives.light.PointLight;
@@ -63,7 +64,15 @@ public class World {
         }
         Color reflectedColor = reflectedColor(data, remaining);
         Color refractedColor = refractedColor(data, remaining);
-        return surfaceColor.add(reflectedColor).add(refractedColor);
+
+        Material m = data.intersectedObj.getMaterial();
+        if(m.reflective > 0 && m.transparency > 0){
+            double reflectance = FresnelEffect.schlick(data);
+            return surfaceColor.add(reflectedColor.multiply(reflectance))
+                    .add(refractedColor.multiply(1 - reflectance));
+        }
+        else
+            return surfaceColor.add(reflectedColor).add(refractedColor);
     }
 
     public Color worldColorAtRay(Ray ray, int remaining){
