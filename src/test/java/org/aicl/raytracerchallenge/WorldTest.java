@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.aicl.raytracerchallenge.primitives.*;
 import org.aicl.raytracerchallenge.primitives.light.PointLight;
+import org.aicl.raytracerchallenge.primitives.pattern.TestPattern;
 import org.aicl.raytracerchallenge.primitives.ray.Intersection;
 import org.aicl.raytracerchallenge.primitives.ray.PrecomputedIntersectionData;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
@@ -296,5 +297,31 @@ public class WorldTest {
         comps.compute(intersections.hit(), ray, intersections);
         Color c = w.refractedColor(comps, 5);
         assertTrue(new Color(0, 0, 0).isIdentical(c));
+    }
+
+    @Test
+    public void nonBlackRefractedColorTest(){
+        World w = World.createDefault();
+        Shape a = w.getObject(0);
+
+        a.getMaterial().ambient = 1.0;
+        a.getMaterial().pattern = new TestPattern();
+
+        Shape b = w.getObject(1);
+        b.getMaterial().transparency = 1.0;
+        b.getMaterial().refractiveIndex = 1.5;
+
+        Ray r = new Ray(new Point(0, 0, 0.1), new Vector(0, 1, 0));
+        RayIntersection intersections = new RayIntersection(4, List.of(
+           new Intersection(-0.9899, a),
+           new Intersection(-0.4899, b),
+           new Intersection(0.4899, b),
+           new Intersection(0.9899, a)
+        ));
+
+        PrecomputedIntersectionData comps = new PrecomputedIntersectionData();
+        comps.compute(intersections.hit(), r, intersections);
+        Color c = w.refractedColor(comps, 5);
+        assertTrue(c.isIdentical(new Color(0, 0.99888, 0.04721)));
     }
 }

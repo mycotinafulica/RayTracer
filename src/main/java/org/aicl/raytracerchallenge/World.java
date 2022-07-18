@@ -141,7 +141,14 @@ public class World {
         if(sin2t > 1)
             return new Color(0, 0, 0);
 
-        return new Color(1, 1, 1);
+        double cos_t = Math.sqrt(1.0 - sin2t);
+        Tuple refractedRayDir = (data.normal.multiply(nRatio * cosi - cos_t))
+                .subtract(data.eyev.multiply(nRatio));
+
+        Ray refractedRay = new Ray(data.underPoint, new Vector(refractedRayDir));
+        Color result = worldColorAtRay(refractedRay, remaining - 1);
+
+        return result.multiply(data.intersectedObj.getMaterial().transparency);
     }
 
     public static World createDefault(){
