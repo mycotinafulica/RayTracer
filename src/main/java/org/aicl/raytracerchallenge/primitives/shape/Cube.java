@@ -40,7 +40,14 @@ public class Cube extends Shape {
 
     @Override
     public Tuple localNormal(Tuple objectPoint) {
-        return null;
+        double maxC = Math.max(Math.abs(objectPoint.x), Math.max(Math.abs(objectPoint.y), Math.abs(objectPoint.z)));
+
+        if(maxC == Math.abs(objectPoint.x))
+            return new Vector(objectPoint.x, 0, 0);
+        else if(maxC == Math.abs(objectPoint.y))
+            return new Vector(0, objectPoint.y, 0);
+        else
+            return new Vector(0, 0, objectPoint.z);
     }
 
     @Override
