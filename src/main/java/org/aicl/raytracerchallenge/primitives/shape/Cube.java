@@ -28,10 +28,14 @@ public class Cube extends Shape {
         double tmin = Math.max(xPair.component1(), Math.max(yPair.component1(), zPair.component1()));
         double tmax = Math.min(xPair.component2(), Math.min(yPair.component2(), zPair.component2()));
 
-        return new RayIntersection(2, List.of(
-                new Intersection(tmin, this),
-                new Intersection(tmax, this)
-        ));
+        if(tmin > tmax)
+            return new RayIntersection(0, List.of());
+        else {
+            return new RayIntersection(2, List.of(
+                    new Intersection(tmin, this),
+                    new Intersection(tmax, this)
+            ));
+        }
     }
 
     @Override
