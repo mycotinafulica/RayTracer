@@ -19,7 +19,7 @@ public class Cylinder extends Shape{
 
     @Override
     public RayIntersection localIntersect(Ray transformedRay) {
-        double a = transformedRay.direction.x*transformedRay.direction.x + transformedRay.direction.z + transformedRay.direction.z;
+        double a = transformedRay.direction.x*transformedRay.direction.x + transformedRay.direction.z*transformedRay.direction.z;
         if(FloatEquality.isEqual(a, 0))
             return new RayIntersection(0, List.of());
 
@@ -32,7 +32,12 @@ public class Cylinder extends Shape{
         if(disc < 0)
             return new RayIntersection(0, List.of());
 
-        return new RayIntersection(1, List.of(new Intersection(1, this)));
+        double t0 = (-b - Math.sqrt(disc))/(2* a);
+        double t1 = (-b + Math.sqrt(disc))/(2* a);
+        return new RayIntersection(2, List.of(
+                new Intersection(t0, this),
+                new Intersection(t1, this)
+        ));
     }
 
     @Override
