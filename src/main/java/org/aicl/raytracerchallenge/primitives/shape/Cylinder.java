@@ -13,6 +13,9 @@ import java.util.UUID;
 public class Cylinder extends Shape{
     private String id;
 
+    private double maximum = 999999;
+    private double minimum = -999999;
+
     public Cylinder(){
         super();
         id = UUID.randomUUID().toString();
@@ -35,10 +38,26 @@ public class Cylinder extends Shape{
 
         double t0 = (-b - Math.sqrt(disc))/(2* a);
         double t1 = (-b + Math.sqrt(disc))/(2* a);
-        return new RayIntersection(2, List.of(
-                new Intersection(t0, this),
-                new Intersection(t1, this)
-        ));
+
+        if(t0 > t1) {
+            double temp = t0;
+            t0 = t1;
+            t1 = temp;
+        }
+
+        RayIntersection intersections = new RayIntersection(0, List.of());
+        double y0 = transformedRay.origin.y + t0 * transformedRay.direction.y;
+        if(minimum < y0 && y0 < maximum) {
+            intersections.concat(new RayIntersection(1, List.of(new Intersection(t0, this))));
+        }
+
+        double y1 = transformedRay.origin.y + t1 * transformedRay.direction.y;
+        if(minimum < y1 && y1 < maximum) {
+            intersections.concat(new RayIntersection(1, List.of(new Intersection(t1, this))));
+        }
+        intersections.sort();
+
+        return intersections;
     }
 
     @Override
@@ -59,5 +78,21 @@ public class Cylinder extends Shape{
     @Override
     public String getId() {
         return id;
+    }
+
+    public double maximum(){
+        return maximum;
+    }
+
+    public double minimum(){
+        return minimum;
+    }
+
+    public void setMinimum(double min){
+        minimum = min;
+    }
+
+    public void setMaximum(double max){
+        maximum = max;
     }
 }
