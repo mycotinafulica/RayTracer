@@ -16,6 +16,8 @@ public class Cylinder extends Shape{
     private double maximum = 999999;
     private double minimum = -999999;
 
+    public boolean closed = false;
+
     public Cylinder(){
         super();
         id = UUID.randomUUID().toString();
@@ -24,8 +26,9 @@ public class Cylinder extends Shape{
     @Override
     public RayIntersection localIntersect(Ray transformedRay) {
         double a = transformedRay.direction.x*transformedRay.direction.x + transformedRay.direction.z*transformedRay.direction.z;
-        if(FloatEquality.isEqual(a, 0))
-            return new RayIntersection(0, List.of());
+        if(FloatEquality.isEqual(a, 0)){
+            return intersectCaps(transformedRay, new RayIntersection(0, List.of()));
+        }
 
         double b = 2 * transformedRay.origin.x * transformedRay.direction.x
                 + 2 * transformedRay.origin.z * transformedRay.direction.z;
@@ -33,6 +36,7 @@ public class Cylinder extends Shape{
 
         double disc = (b*b) - (4 * a * c);
 
+        System.out.println("Disc : " + disc);
         if(disc < 0)
             return new RayIntersection(0, List.of());
 
@@ -48,16 +52,40 @@ public class Cylinder extends Shape{
         RayIntersection intersections = new RayIntersection(0, List.of());
         double y0 = transformedRay.origin.y + t0 * transformedRay.direction.y;
         if(minimum < y0 && y0 < maximum) {
-            intersections.concat(new RayIntersection(1, List.of(new Intersection(t0, this))));
+            intersections.addIntersection(new Intersection(t0, this));
         }
 
         double y1 = transformedRay.origin.y + t1 * transformedRay.direction.y;
         if(minimum < y1 && y1 < maximum) {
-            intersections.concat(new RayIntersection(1, List.of(new Intersection(t1, this))));
+            intersections.addIntersection(new Intersection(t1, this));
         }
         intersections.sort();
 
+        return intersectCaps(transformedRay, intersections);
+    }
+
+    private RayIntersection intersectCaps(Ray ray, RayIntersection intersections){
+        if(!closed || FloatEquality.isEqual(0, ray.direction.y)){
+            return intersections;
+        }
+
+        double t = (minimum - ray.origin.y) / ray.direction.y;
+        if(checkCap(ray, t)){
+            intersections.addIntersection(new Intersection(t, this));
+        }
+
+        t = (maximum - ray.origin.y) / ray.direction.y;
+        if(checkCap(ray, t)){
+            intersections.addIntersection(new Intersection(t, this));
+        }
         return intersections;
+    }
+
+    private boolean checkCap(Ray ray, double t){
+        double x = ray.origin.x + t * ray.direction.x;
+        double z = ray.origin.z + t * ray.direction.z;
+
+        return (x*x + z*z) <= 1;
     }
 
     @Override

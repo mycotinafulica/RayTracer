@@ -82,6 +82,7 @@ public class WorldTest {
         data.compute(i, ray, new RayIntersection(0, List.of()));
         Color result = w.shadeHit(data,0);
         Color expected = new Color(0.90498, 0.90498, 0.90498);
+        System.out.println(result.toTuple().toString());
         assertTrue(result.isIdentical(expected));
     }
 

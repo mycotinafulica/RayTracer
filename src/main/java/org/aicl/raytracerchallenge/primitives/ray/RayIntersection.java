@@ -43,6 +43,12 @@ public class RayIntersection {
         return this;
     }
 
+    public void addIntersection(Intersection intersection){
+        this.count++;
+        intersections.add(intersection);
+        checkIfSmallest(intersection.time, intersections.size());
+    }
+
     public double getTime(int index){
         return intersections.get(index).time;
     }
@@ -89,6 +95,14 @@ public class RayIntersection {
 
     public void sort(){
         Collections.sort(intersections);
+        if(smallestNonNegIdx != -1){
+            for(int i = 0; i < intersections.size() ; i++){
+                if(intersections.get(i).time > 0) {
+                    smallestNonNegIdx = i;
+                    return;
+                }
+            }
+        }
     }
 
     public void setSmallestNonNegIdx(int smallestNonNegIdx) {
