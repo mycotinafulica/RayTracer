@@ -1,6 +1,7 @@
 package org.aicl.raytracerchallenge.primitives.shape;
 
 import org.aicl.raytracerchallenge.primitives.Tuple;
+import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.ray.Intersection;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
@@ -42,7 +43,7 @@ public class Cylinder extends Shape{
 
     @Override
     public Tuple localNormal(Tuple objectPoint) {
-        return null;
+        return new Vector(objectPoint.x, 0, objectPoint.z);
     }
 
     @Override
