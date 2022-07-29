@@ -1,5 +1,6 @@
 package org.aicl.raytracerchallenge.primitives.shape;
 
+import org.aicl.raytracerchallenge.primitives.Constant;
 import org.aicl.raytracerchallenge.primitives.Tuple;
 import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.ray.Intersection;
@@ -36,7 +37,6 @@ public class Cylinder extends Shape{
 
         double disc = (b*b) - (4 * a * c);
 
-        System.out.println("Disc : " + disc);
         if(disc < 0)
             return new RayIntersection(0, List.of());
 
@@ -90,6 +90,14 @@ public class Cylinder extends Shape{
 
     @Override
     public Tuple localNormal(Tuple objectPoint) {
+        double dist = objectPoint.x * objectPoint.x + objectPoint.z * objectPoint.z;
+
+        if(dist < 1 && objectPoint.y >= (maximum - Constant.epsilon))
+            return new Vector(0, 1, 0);
+
+        if(dist < 1 && objectPoint.y <= (maximum - Constant.epsilon))
+            return new Vector(0, -1, 0);
+
         return new Vector(objectPoint.x, 0, objectPoint.z);
     }
 
