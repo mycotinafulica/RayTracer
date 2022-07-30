@@ -1,6 +1,8 @@
 package org.aicl.raytracerchallenge.primitives.shape;
 
+import org.aicl.raytracerchallenge.primitives.Constant;
 import org.aicl.raytracerchallenge.primitives.Tuple;
+import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.ray.Intersection;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
@@ -65,7 +67,7 @@ public class Cone extends Shape{
         if(minimum < y1 && y1 < maximum) {
             intersections.addIntersection(new Intersection(t1, this));
         }
-        
+
         return intersectCaps(transformedRay, intersections);
     }
 
@@ -84,6 +86,7 @@ public class Cone extends Shape{
             intersections.addIntersection(new Intersection(t, this));
         }
         intersections.sort();
+
         return intersections;
     }
 
@@ -91,13 +94,30 @@ public class Cone extends Shape{
         double x = ray.origin.x + t * ray.direction.x;
         double z = ray.origin.z + t * ray.direction.z;
 
-
         return (x*x + z*z) <= Math.abs(radius);
     }
 
     @Override
     public Tuple localNormal(Tuple objectPoint) {
-        return null;
+        if(FloatEquality.isEqual(objectPoint.x, 0) &&
+            FloatEquality.isEqual(objectPoint.y, 0) &&
+                FloatEquality.isEqual(objectPoint.z, 0)){
+            return new Vector(0, 0, 0);
+        }
+
+        double dist = objectPoint.x * objectPoint.x + objectPoint.z * objectPoint.z;
+
+        if(dist < 1 && objectPoint.y >= (maximum - Constant.epsilon))
+            return new Vector(0, 1, 0);
+
+        if(dist < 1 && objectPoint.y <= (maximum - Constant.epsilon))
+            return new Vector(0, -1, 0);
+
+        double y = Math.sqrt(dist);
+        if(objectPoint.y > 0)
+            y = -y;
+
+        return new Vector(objectPoint.x, y, objectPoint.z);
     }
 
     @Override
