@@ -16,6 +16,8 @@ public class Cone extends Shape{
     private double maximum = 999999;
     private double minimum = -999999;
 
+    public boolean closed = false;
+
     public Cone(){
         super();
         id = UUID.randomUUID().toString();
@@ -31,14 +33,12 @@ public class Cone extends Shape{
         double c = Math.pow(transformedRay.origin.x, 2) -  Math.pow(transformedRay.origin.y, 2) +  Math.pow(transformedRay.origin.z, 2);
 
         if(FloatEquality.isEqual(a, 0) && FloatEquality.isEqual(b, 0)){
-            return null;
-            //TODO
-//            return intersectCaps(transformedRay, new RayIntersection(0, List.of()));
+            return intersectCaps(transformedRay, new RayIntersection(0, List.of()));
         }
 
         if(FloatEquality.isEqual(a, 0) && !FloatEquality.isEqual(b, 0)){
             double t = -c/(2*b);
-            return new RayIntersection(1, List.of(new Intersection(t, this)));
+            return intersectCaps(transformedRay, new RayIntersection(1, List.of(new Intersection(t, this))));
         }
 
         double disc = (b*b) - (4 * a * c);
@@ -65,11 +65,34 @@ public class Cone extends Shape{
         if(minimum < y1 && y1 < maximum) {
             intersections.addIntersection(new Intersection(t1, this));
         }
+        
+        return intersectCaps(transformedRay, intersections);
+    }
 
+    private RayIntersection intersectCaps(Ray ray, RayIntersection intersections){
+        if(!closed || FloatEquality.isEqual(0, ray.direction.y)){
+            return intersections;
+        }
+
+        double t = (minimum - ray.origin.y) / ray.direction.y;
+        if(checkCap(ray, t, minimum)){
+            intersections.addIntersection(new Intersection(t, this));
+        }
+
+        t = (maximum - ray.origin.y) / ray.direction.y;
+        if(checkCap(ray, t, maximum)){
+            intersections.addIntersection(new Intersection(t, this));
+        }
         intersections.sort();
-
         return intersections;
-//        return intersectCaps(transformedRay, intersections);
+    }
+
+    private boolean checkCap(Ray ray, double t, double radius){
+        double x = ray.origin.x + t * ray.direction.x;
+        double z = ray.origin.z + t * ray.direction.z;
+
+
+        return (x*x + z*z) <= Math.abs(radius);
     }
 
     @Override
@@ -90,5 +113,21 @@ public class Cone extends Shape{
     @Override
     public String getId() {
         return id;
+    }
+
+    public double maximum(){
+        return maximum;
+    }
+
+    public double minimum(){
+        return minimum;
+    }
+
+    public void setMinimum(double min){
+        minimum = min;
+    }
+
+    public void setMaximum(double max){
+        maximum = max;
     }
 }
