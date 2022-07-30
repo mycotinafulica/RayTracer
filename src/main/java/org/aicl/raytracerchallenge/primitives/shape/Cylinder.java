@@ -59,7 +59,6 @@ public class Cylinder extends Shape{
         if(minimum < y1 && y1 < maximum) {
             intersections.addIntersection(new Intersection(t1, this));
         }
-        intersections.sort();
 
         return intersectCaps(transformedRay, intersections);
     }
@@ -78,6 +77,7 @@ public class Cylinder extends Shape{
         if(checkCap(ray, t)){
             intersections.addIntersection(new Intersection(t, this));
         }
+        intersections.sort();
         return intersections;
     }
 
