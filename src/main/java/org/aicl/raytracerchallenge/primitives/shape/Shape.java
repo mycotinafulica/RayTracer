@@ -8,6 +8,7 @@ import org.aicl.raytracerchallenge.transformation.RayTransformer;
 public abstract class Shape {
     protected Matrix transform  = Matrix.identity();
     protected Material material = new Material();
+    protected Shape parent = null;
 
     public Shape(){
         material = new Material();
@@ -54,5 +55,13 @@ public abstract class Shape {
         }
 
         return false;
+    }
+
+    public Shape getParent() {
+        return parent;
+    }
+
+    public void setParent(Shape group){
+        this.parent = group;
     }
 }
