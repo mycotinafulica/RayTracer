@@ -27,11 +27,30 @@ public abstract class Shape {
         this.transform = m;
     }
     public Vector normalAt(Point p) {
-        Tuple objectPoint  = transform.inverse().multiply(p);
+        Tuple objectPoint  = worldPointToObjectPoint(p);
         Tuple localNormal  = localNormal(objectPoint);
-        Tuple worldNormal  = transform.inverse().transpose().multiply(localNormal);
+        Tuple worldNormal  = objectNormalToWorldNormal(localNormal);
         worldNormal.w = 0;
         return new Vector(worldNormal.normalize());
+    }
+
+    public Tuple worldPointToObjectPoint(Point p){
+        Tuple tempPoint = p;
+        if(parent != null)
+            tempPoint = parent.worldPointToObjectPoint(p);
+
+        return transform.inverse().multiply(tempPoint);
+    }
+
+    public Tuple objectNormalToWorldNormal(Tuple localNormal){
+        Tuple normal = transform.inverse().transpose().multiply(localNormal);
+        normal.w = 0;
+        normal = normal.normalize();
+
+        if(parent != null)
+            normal = parent.objectNormalToWorldNormal(normal);
+
+        return normal;
     }
 
     public void setMaterial(Material m){

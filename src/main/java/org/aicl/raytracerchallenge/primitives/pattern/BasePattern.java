@@ -30,7 +30,7 @@ public abstract class BasePattern {
     public abstract Color patternAt(Point p);
 
     public Color patternAtObject(Shape shape, Point p){
-        Tuple objectPoint  = shape.getTransform().inverse().multiply(p);
+        Tuple objectPoint  = shape.worldPointToObjectPoint(p);
         Tuple patternPoint = inverseTransform.multiply(objectPoint);
 
         return patternAt(new Point(patternPoint));

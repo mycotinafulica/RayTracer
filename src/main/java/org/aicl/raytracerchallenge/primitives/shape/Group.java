@@ -37,7 +37,7 @@ public class Group extends Shape{
 
     @Override
     public Tuple localNormal(Tuple objectPoint) {
-        return null;
+        throw new IllegalStateException("Shouldn't be called");
     }
 
     @Override
