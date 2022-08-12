@@ -8,34 +8,17 @@ import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 import java.util.List;
 import java.util.UUID;
 
-public class Triangle extends Shape{
-    protected String id;
+public class SmoothTriangle extends Triangle{
+    public Vector n1;
+    public Vector n2;
+    public Vector n3;
 
-    public Point p1;
-    public Point p2;
-    public Point p3;
+    public SmoothTriangle(Point p1, Point p2, Point p3, Vector n1, Vector n2, Vector n3){
+        super(p1, p2, p3);
 
-    public Vector e1;
-    public Vector e2;
-    public Vector normal;
-
-    protected double cachedU;
-    protected double cachedV;
-
-    public Triangle(){
-        super();
-        id = UUID.randomUUID().toString();
-    }
-
-    public Triangle(Point p1, Point p2, Point p3){
-        this();
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
-
-        e1 = new Vector(p2.subtract(p1));
-        e2 = new Vector(p3.subtract(p1));
-        normal = new Vector(TupleOperation.cross(e2, e1).normalize());
+        this.n1 = n1;
+        this.n2 = n2;
+        this.n3 = n3;
     }
 
     @Override
@@ -57,17 +40,25 @@ public class Triangle extends Shape{
             return new RayIntersection(0, List.of());
 
         double t = f* TupleOperation.dot(e2, originCrossE1);
-        return new RayIntersection(1, List.of(new Intersection( t, this)));
+        return new RayIntersection(1, List.of(new Intersection( t, this, u, v)));
     }
 
     @Override
     public Tuple localNormal(Tuple objectPoint, Intersection hit) {
-        return normal;
+        Tuple part1 = n2.multiply(hit.u);
+        Tuple part2 = n3.multiply(hit.v);
+        Tuple part3 = n1.multiply(1 - hit.u - hit.v);
+
+        return part1.add(part2).add(part3);
+    }
+
+    public Intersection intersectionWithUV(double t, Shape intersectedObj, double u, double v){
+        return new Intersection(t, intersectedObj, u, v);
     }
 
     @Override
     public boolean isSame(Shape input) {
-        return (input instanceof Triangle) && id.equals(input.getId());
+        return (input instanceof SmoothTriangle) && id.equals(input.getId());
     }
 
     @Override
@@ -77,6 +68,6 @@ public class Triangle extends Shape{
 
     @Override
     public String getId() {
-        return null;
+        return id;
     }
 }

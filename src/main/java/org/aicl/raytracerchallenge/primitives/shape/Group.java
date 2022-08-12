@@ -1,6 +1,7 @@
 package org.aicl.raytracerchallenge.primitives.shape;
 
 import org.aicl.raytracerchallenge.primitives.Tuple;
+import org.aicl.raytracerchallenge.primitives.ray.Intersection;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 
@@ -36,7 +37,7 @@ public class Group extends Shape{
     }
 
     @Override
-    public Tuple localNormal(Tuple objectPoint) {
+    public Tuple localNormal(Tuple objectPoint, Intersection hit) {
         throw new IllegalStateException("Shouldn't be called");
     }
 

@@ -98,7 +98,7 @@ public class Cone extends Shape{
     }
 
     @Override
-    public Tuple localNormal(Tuple objectPoint) {
+    public Tuple localNormal(Tuple objectPoint, Intersection hit) {
         if(FloatEquality.isEqual(objectPoint.x, 0) &&
             FloatEquality.isEqual(objectPoint.y, 0) &&
                 FloatEquality.isEqual(objectPoint.z, 0)){

@@ -12,9 +12,9 @@ public class PlaneTest {
     @Test
     public void testPlaneNormals(){
         Plane p   = new Plane();
-        Vector n1 = new Vector(p.localNormal(new Point(0, 0, 0)));
-        Vector n2 = new Vector(p.localNormal(new Point(10, 0, -10)));
-        Vector n3 = new Vector(p.localNormal(new Point(-5, 0, 150)));
+        Vector n1 = new Vector(p.localNormal(new Point(0, 0, 0), null));
+        Vector n2 = new Vector(p.localNormal(new Point(10, 0, -10), null));
+        Vector n3 = new Vector(p.localNormal(new Point(-5, 0, 150), null));
         Vector expected = new Vector(0, 1, 0);
         assertTrue(expected.isIdentical(n1));
         assertTrue(expected.isIdentical(n2));

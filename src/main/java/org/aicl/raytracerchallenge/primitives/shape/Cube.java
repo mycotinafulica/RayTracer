@@ -39,7 +39,7 @@ public class Cube extends Shape {
     }
 
     @Override
-    public Tuple localNormal(Tuple objectPoint) {
+    public Tuple localNormal(Tuple objectPoint, Intersection hit) {
         double maxC = Math.max(Math.abs(objectPoint.x), Math.max(Math.abs(objectPoint.y), Math.abs(objectPoint.z)));
 
         if(maxC == Math.abs(objectPoint.x))

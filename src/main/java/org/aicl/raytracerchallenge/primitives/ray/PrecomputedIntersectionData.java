@@ -30,7 +30,7 @@ public class PrecomputedIntersectionData {
 
         this.point  = new Point(ray.position(hit.time));
         this.eyev   = new Vector(ray.direction.negates());
-        this.normal = new Vector(intersectedObj.normalAt(point));
+        this.normal = new Vector(intersectedObj.normalAt(point, hit));
 
         //if inside object
         if(TupleOperation.dot(normal, eyev) < 0){

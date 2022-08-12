@@ -38,7 +38,7 @@ public class PutTogetherChapter6 {
                 RayIntersection xs = sphere.intersect(ray);
                 if(xs.count != 0){
                     Tuple pointAtHit = ray.position(xs.hit().time);
-                    Vector normal    = sphere.normalAt(new Point(pointAtHit));
+                    Vector normal    = sphere.normalAt(new Point(pointAtHit), xs.hit());
                     System.out.println("direction :" + direction.toString());
                     System.out.println("normal :" + normal.toString());
                     Vector eyev      = new Vector(direction.normalize().negates()); //new Vector(new Vector(10, 10, -10).normalize()); //specular would be when the light -- eye -- spehere in one straight line

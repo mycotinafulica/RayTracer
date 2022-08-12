@@ -89,7 +89,7 @@ public class Cylinder extends Shape{
     }
 
     @Override
-    public Tuple localNormal(Tuple objectPoint) {
+    public Tuple localNormal(Tuple objectPoint, Intersection hit) {
         double dist = objectPoint.x * objectPoint.x + objectPoint.z * objectPoint.z;
 
         if(dist < 1 && objectPoint.y >= (maximum - Constant.epsilon))

@@ -40,7 +40,7 @@ public class Sphere extends Shape {
     }
 
     @Override
-    public Tuple localNormal(Tuple objectPoint) {
+    public Tuple localNormal(Tuple objectPoint, Intersection hit) {
         return objectPoint.subtract(origin);
     }
 

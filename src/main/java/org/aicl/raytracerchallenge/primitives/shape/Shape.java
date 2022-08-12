@@ -1,6 +1,7 @@
 package org.aicl.raytracerchallenge.primitives.shape;
 
 import org.aicl.raytracerchallenge.primitives.*;
+import org.aicl.raytracerchallenge.primitives.ray.Intersection;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 import org.aicl.raytracerchallenge.transformation.RayTransformer;
@@ -26,9 +27,9 @@ public abstract class Shape {
     public void setTransform(Matrix m){
         this.transform = m;
     }
-    public Vector normalAt(Point p) {
+    public Vector normalAt(Point p, Intersection hit) {
         Tuple objectPoint  = worldPointToObjectPoint(p);
-        Tuple localNormal  = localNormal(objectPoint);
+        Tuple localNormal  = localNormal(objectPoint, hit);
         Tuple worldNormal  = objectNormalToWorldNormal(localNormal);
         worldNormal.w = 0;
         return new Vector(worldNormal.normalize());
@@ -61,7 +62,7 @@ public abstract class Shape {
         return material;
     }
     public abstract RayIntersection localIntersect(Ray transformedRay);
-    public abstract Tuple localNormal(Tuple objectPoint);
+    public abstract Tuple localNormal(Tuple objectPoint, Intersection hit);
 
     public abstract boolean isSame(Shape input);
     public abstract boolean isSameCharacteristics(Shape shape);

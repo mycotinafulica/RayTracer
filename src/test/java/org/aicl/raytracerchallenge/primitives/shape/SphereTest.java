@@ -96,19 +96,19 @@ public class SphereTest {
     @Test
     public void testSphereNormals(){
         Sphere sphere = new Sphere();
-        Vector normalAt = sphere.normalAt(new Point(1, 0, 0));
+        Vector normalAt = sphere.normalAt(new Point(1, 0, 0), null);
         Vector expected = new Vector(1, 0, 0);
         assertTrue(expected.isIdentical(normalAt));
 
-        normalAt = sphere.normalAt(new Point(0, 1, 0));
+        normalAt = sphere.normalAt(new Point(0, 1, 0), null);
         expected = new Vector(0, 1, 0);
         assertTrue(expected.isIdentical(normalAt));
 
-        normalAt = sphere.normalAt(new Point(0, 0, 1));
+        normalAt = sphere.normalAt(new Point(0, 0, 1), null);
         expected = new Vector(0, 0, 1);
         assertTrue(expected.isIdentical(normalAt));
 
-        normalAt = sphere.normalAt(new Point(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0));
+        normalAt = sphere.normalAt(new Point(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0), null);
         expected = new Vector(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0);
         assertTrue(expected.isIdentical(normalAt));
     }
@@ -116,7 +116,7 @@ public class SphereTest {
     @Test
     public void testNormalsAreNormalized(){
         Sphere sphere   = new Sphere();
-        Vector normalAt = sphere.normalAt(new Point(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0));
+        Vector normalAt = sphere.normalAt(new Point(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0), null);
         Vector expected = new Vector(Math.sqrt(3)/3.0, Math.sqrt(3)/3.0, Math.sqrt(3)/3.0);
         Tuple normalized = normalAt.normalize();
     }
@@ -128,7 +128,7 @@ public class SphereTest {
         Matrix translate = generator.translate(0, 1, 0);
         sphere.setTransform(translate);
 
-        Vector normal = sphere.normalAt(new Point(0, 1.70711, -0.70711));
+        Vector normal = sphere.normalAt(new Point(0, 1.70711, -0.70711), null);
         Vector expected = new Vector(0, 0.70711, -0.70711);
         assertTrue(expected.isIdentical(normal));
     }
@@ -140,7 +140,7 @@ public class SphereTest {
         Matrix translate = generator.scale(1, 0.5, 1).multiply(generator.rotateZ(Math.PI/5));
         sphere.setTransform(translate);
         
-        Vector normal = sphere.normalAt(new Point(0, Math.sqrt(2)/2.0, -Math.sqrt(2)/2.0));
+        Vector normal = sphere.normalAt(new Point(0, Math.sqrt(2)/2.0, -Math.sqrt(2)/2.0), null);
         Vector expected = new Vector(0, 0.97014, -0.24254);
         System.out.println(normal.toString());
         assertTrue(expected.isIdentical(normal));

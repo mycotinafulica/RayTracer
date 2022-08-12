@@ -3,6 +3,7 @@ package org.aicl.raytracerchallenge.primitives.shape;
 import org.aicl.raytracerchallenge.primitives.Constant;
 import org.aicl.raytracerchallenge.primitives.Tuple;
 import org.aicl.raytracerchallenge.primitives.Vector;
+import org.aicl.raytracerchallenge.primitives.ray.Intersection;
 import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
 
@@ -28,7 +29,7 @@ public class Plane extends Shape{
     }
 
     @Override
-    public Tuple localNormal(Tuple objectPoint) {
+    public Tuple localNormal(Tuple objectPoint, Intersection hit) {
         return new Vector(0, 1, 0);
     }
 
