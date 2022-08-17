@@ -48,7 +48,7 @@ public class Chapter15PutTogether {
         world.addObject(wall);
         world.addObject(g);
         world.addLight(new PointLight(new Point(-10, 10, -20), new Color(1, 1, 1)));
-        Camera camera = new Camera(1920, 1080, Math.PI/3.0);
+        Camera camera = new Camera(192, 108, Math.PI/3.0);
         camera.transform = TransformMatrixGenerator.viewTransform(new Point(0, 1.5, -20),
                 new Point(0, 1, 0), new Vector(0, 1, 0));
 

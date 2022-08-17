@@ -2,8 +2,12 @@ package org.aicl.raytracerchallenge.primitives.shape;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.aicl.raytracerchallenge.primitives.Point;
+import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.ray.Intersection;
+import org.aicl.raytracerchallenge.primitives.ray.Ray;
 import org.aicl.raytracerchallenge.primitives.ray.RayIntersection;
+import org.aicl.raytracerchallenge.transformation.TransformMatrixGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -84,5 +88,29 @@ public class CSGTest {
         assertEquals(2, filtered.count);
         assertTrue(filtered.getIntersection(0).isEqual(xs.getIntersection(0)));
         assertTrue(filtered.getIntersection(1).isEqual(xs.getIntersection(1)));
+    }
+
+    @Test
+    public void rayMissCSGTest(){
+        CSG c = new CSG(CSG.Operation.UNION, new Sphere(), new Cube());
+        Ray r = new Ray(new Point(0, 2, -5), new Vector(0, 0, 1));
+        RayIntersection xs = c.localIntersect(r);
+        assertEquals(0, xs.count);
+    }
+
+    @Test
+    public void rayHitCSGTest(){
+        TransformMatrixGenerator generator = new TransformMatrixGenerator();
+        Shape s1 = new Sphere();
+        Shape s2 = new Sphere();
+        s2.setTransform(generator.translate(0, 0, 0.5));
+        CSG c = new CSG(CSG.Operation.UNION, s1, s2);
+        Ray r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+        RayIntersection xs = c.localIntersect(r);
+        assertEquals(2, xs.count);
+        assertEquals(4., xs.getIntersection(0).time, 0.00001);
+        assertEquals(6.5, xs.getIntersection(1).time, 0.00001);
+        assertTrue(xs.getIntersection(0).intersectedShape.isSame(s1));
+        assertTrue(xs.getIntersection(1).intersectedShape.isSame(s2));
     }
 }

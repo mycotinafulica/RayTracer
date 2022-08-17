@@ -65,7 +65,7 @@ public class Group extends Shape{
         children.add(child);
     }
 
-    public boolean hashChild(Shape child){
+    public boolean hashChild(Shape child){ //TODO how about group in group? not handled yet!!
         for(int i = 0; i < children.size() ; i++){
             if(child.isSame(children.get(i))){
                 return true;

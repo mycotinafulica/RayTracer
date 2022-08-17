@@ -39,7 +39,10 @@ public class CSG extends Shape{
 
     @Override
     public RayIntersection localIntersect(Ray transformedRay) {
-        return null;
+        RayIntersection leftXs = left.intersect(transformedRay);
+        RayIntersection combined = right.intersect(transformedRay);
+        combined.concat(leftXs);
+        return filterIntersections(combined);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class CSG extends Shape{
 
         xs.sort();
         for(int i = 0; i < xs.count; i++){
-            boolean lhit = left.isSame(xs.getIntersectedShape(i));
+            boolean lhit = this.include(xs.getIntersectedShape(i));
             if(intersectionAllowed(operation, lhit, inl, inr)){
                 result.addIntersection(xs.getIntersection(i));
             }
@@ -96,5 +99,17 @@ public class CSG extends Shape{
     @Override
     public String getId() {
         return id;
+    }
+
+    public boolean include(Shape shape){
+        if(left instanceof CSG){
+            return ((CSG) left).include(shape);
+        }
+        else if(left instanceof Group){ // how about group in group? CSG in group? waww
+            return ((Group) left).getChildren().contains(shape);
+        }
+        else{
+            return left.isSame(shape);
+        }
     }
 }
