@@ -1,7 +1,9 @@
 package org.aicl.raytracerchallenge.parser;
 
 import org.aicl.raytracerchallenge.primitives.Point;
+import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.shape.Group;
+import org.aicl.raytracerchallenge.primitives.shape.SmoothTriangle;
 import org.aicl.raytracerchallenge.primitives.shape.Triangle;
 
 import java.io.BufferedReader;
@@ -31,11 +33,26 @@ public class WavefrontObjParser {
                 ));
             }
             else if(command.equals("f")){
+                boolean isSmoothTriangle         = false;
+                ArrayList<Integer> normalIndices = null;
+
+                if(components[1].contains("/")){
+                    isSmoothTriangle = true;
+                    normalIndices = new ArrayList<>();
+                }
+
                 ArrayList<Integer> verticeIdx = new ArrayList<>();
                 for(int i = 1; i < components.length ; i++){
-                    verticeIdx.add(Integer.parseInt(components[i]) - 1);
+                    if(isSmoothTriangle){
+                        String[] faceComponents = components[i].split("/");
+                        verticeIdx.add(Integer.parseInt(faceComponents[0]) - 1);
+                        normalIndices.add(Integer.parseInt(faceComponents[2]) - 1);
+                    }
+                    else{
+                        verticeIdx.add(Integer.parseInt(components[i]) - 1);
+                    }
                 }
-                ArrayList<Triangle> triangles = triangulate(result, verticeIdx);
+                ArrayList<Triangle> triangles = triangulate(result, verticeIdx, isSmoothTriangle, normalIndices);
                 for(int i = 0; i < triangles.size(); i++){
                     if(lastReferencedGroup == null){
                         result.defaultGroup.addChild(triangles.get(i));
@@ -55,6 +72,13 @@ public class WavefrontObjParser {
                     throw new IllegalArgumentException("Invalid line : " + line);
                 lastReferencedGroup = components[1];
             }
+            else if(command.equals("vn")){
+                if(components.length != 4)
+                    throw new IllegalArgumentException("Invalid line : " + line);
+                result.normals.add(new Vector(
+                                Double.parseDouble(components[1]),  Double.parseDouble(components[2]),  Double.parseDouble(components[3])
+                        ));
+            }
             else{
                 result.ignoredLines++;
             }
@@ -63,13 +87,22 @@ public class WavefrontObjParser {
         return result;
     }
 
-    private ArrayList<Triangle> triangulate(WavefrontScene scene, ArrayList<Integer> vertexIndices){
+    private ArrayList<Triangle> triangulate(WavefrontScene scene, ArrayList<Integer> vertexIndices
+            , boolean isSmoothTriangle, ArrayList<Integer> normalsIndices){
         ArrayList<Triangle> result = new ArrayList<>();
         for(int i = 1 ; i < vertexIndices.size() - 1; i++){
             Point v1 = scene.vertices.get(vertexIndices.get(0));
             Point v2 = scene.vertices.get(vertexIndices.get(i));
             Point v3 = scene.vertices.get(vertexIndices.get(i + 1));
-            result.add(new Triangle(v1, v2, v3));
+            if(isSmoothTriangle){
+                Vector n1 = scene.normals.get(normalsIndices.get(0));
+                Vector n2 = scene.normals.get(normalsIndices.get(i));
+                Vector n3 = scene.normals.get(normalsIndices.get(i + 1));
+                result.add(new SmoothTriangle(v1, v2, v3, n1, n2, n3));
+            }
+            else{
+                result.add(new Triangle(v1, v2, v3));
+            }
         }
 
         return result;

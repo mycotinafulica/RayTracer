@@ -19,9 +19,6 @@ public class Triangle extends Shape{
     public Vector e2;
     public Vector normal;
 
-    protected double cachedU;
-    protected double cachedV;
-
     public Triangle(){
         super();
         id = UUID.randomUUID().toString();

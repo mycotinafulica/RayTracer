@@ -1,6 +1,7 @@
 package org.aicl.raytracerchallenge.parser;
 
 import org.aicl.raytracerchallenge.primitives.Point;
+import org.aicl.raytracerchallenge.primitives.Vector;
 import org.aicl.raytracerchallenge.primitives.shape.Group;
 
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 public class WavefrontScene {
     public int ignoredLines = 0;
     public ArrayList<Point> vertices = new ArrayList<>();
+
+    public ArrayList<Vector> normals = new ArrayList<>();
 
     public Group defaultGroup = new Group();
 
