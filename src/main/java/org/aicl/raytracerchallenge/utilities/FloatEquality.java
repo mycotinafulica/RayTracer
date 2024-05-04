@@ -1,9 +1,9 @@
 package org.aicl.raytracerchallenge.utilities;
 
-import org.aicl.raytracerchallenge.geometry.Constant;
+import org.aicl.raytracerchallenge.primitives.Constant;
 
 public class FloatEquality {
-    public static boolean isEqual(float a, float b){
+    public static boolean isEqual(double a, double b){
         return Math.abs(a - b) < Constant.epsilon;
     }
 }
